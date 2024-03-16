@@ -19,6 +19,10 @@ Use google.
 composer install
 pnpm install
 cp .env.example .env # and edit
+php artisan key:generate
+
+# currently use sqlite for local development
+php artisan migrate:fresh
 
 pnpm run dev
 ```
