@@ -24,7 +24,6 @@
         "@vueuse/core": "^10.9.0",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
-        "geist": "^1.2.2",
         "lucide-vue-next": "^0.358.0",
         "radix-vue": "^1.5.2",
         "tailwind-merge": "^2.2.1",

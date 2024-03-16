@@ -15,7 +15,7 @@ import { ChevronRight } from "lucide-vue-next";
     <div class="w-full h-fit grid grid-cols-3">
         <Menubar class="border-none">
             <MenubarMenu>
-                <MenubarTrigger class="font-bold"> Tridoc </MenubarTrigger>
+                <p class="mx-4 font-figtree text-lg"><span class="font-bold mr-[1px]">Tri</span>doc</p>
             </MenubarMenu>
             <MenubarMenu>
                 <MenubarTrigger>File</MenubarTrigger>
