@@ -12,14 +12,13 @@ const zoomRatioClasses =
 <template>
     <div class="w-full h-full flex flex-col">
         <div class="flex flex-row">
-            <div class="w-2"></div>
             <div class="w-fit">
                 <ToggleGroupRoot class="flex">
                     <ToggleGroupItem
                         value="left"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:minus" class="w-[15px] h-[15px]" />
+                        <Icon icon="lucide:minus" class="w-4 h-4" />
                     </ToggleGroupItem>
                     <ToggleGroupItem
                         value="left"
@@ -31,7 +30,7 @@ const zoomRatioClasses =
                         value="center"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:plus" class="w-[15px] h-[15px]" />
+                        <Icon icon="lucide:plus" class="w-4 h-4" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>
@@ -42,14 +41,13 @@ const zoomRatioClasses =
                         value="left"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:download" class="w-[15px] h-[15px]" />
+                        <Icon icon="lucide:download" class="w-4 h-4" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>
         </div>
-        <div class="h-3"></div>
-        <div class="flex flex-grow w-full">
-            <div class="w-full h-full bg-gray-700 rounded-md border flex items-center justify-center">
+        <div class="flex flex-grow w-full mt-2">
+            <div class="w-full h-full bg-gray-700 rounded-t-md flex items-center justify-center">
                 THIS IS FOR PREVIEW
             </div>
         </div>

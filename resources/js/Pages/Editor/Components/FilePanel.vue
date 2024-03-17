@@ -37,13 +37,13 @@ const toggleGroupItemClasses =
             <div class="flex flex-grow"></div>
             <ToggleGroupRoot type="multiple" class="flex">
                 <ToggleGroupItem value="left" :class="toggleGroupItemClasses">
-                    <Icon icon="lucide:folder-plus" class="w-[15px] h-[15px]" />
+                    <Icon icon="lucide:folder-plus" class="w-4 h-4" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="left" :class="toggleGroupItemClasses">
-                    <Icon icon="lucide:file-plus" class="w-[15px] h-[15px]" />
+                    <Icon icon="lucide:file-plus" class="w-4 h-4" />
                 </ToggleGroupItem>
                 <ToggleGroupItem value="center" :class="toggleGroupItemClasses">
-                    <Icon icon="lucide:upload" class="w-[15px] h-[15px]" />
+                    <Icon icon="lucide:upload" class="w-4 h-4" />
                 </ToggleGroupItem>
             </ToggleGroupRoot>
         </div>

@@ -15,18 +15,17 @@ const toggleGroupItemClasses =
                         value="left"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:undo" class="w-[15px] h-[15px]" />
+                        <Icon icon="lucide:undo" class="w-4 h-4" />
                     </ToggleGroupItem>
                     <ToggleGroupItem
                         value="center"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:redo" class="w-[15px] h-[15px]" />
+                        <Icon icon="lucide:redo" class="w-4 h-4" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>
-            <div class="w-3"></div>
-            <div class="w-fit">
+            <div class="w-fit ml-4">
                 <ToggleGroupRoot type="multiple" class="flex">
                     <ToggleGroupItem
                         value="bold"
@@ -34,7 +33,7 @@ const toggleGroupItemClasses =
                     >
                         <Icon
                             icon="radix-icons:font-bold"
-                            class="w-[15px] h-[15px]"
+                            class="w-4 h-4"
                         />
                     </ToggleGroupItem>
                     <ToggleGroupItem
@@ -43,7 +42,7 @@ const toggleGroupItemClasses =
                     >
                         <Icon
                             icon="radix-icons:font-italic"
-                            class="w-[15px] h-[15px]"
+                            class="w-4 h-4"
                         />
                     </ToggleGroupItem>
                     <ToggleGroupItem
@@ -52,7 +51,7 @@ const toggleGroupItemClasses =
                     >
                         <Icon
                             icon="radix-icons:strikethrough"
-                            class="w-[15px] h-[15px]"
+                            class="w-4 h-4"
                         />
                     </ToggleGroupItem>
                     <ToggleGroupItem
@@ -61,7 +60,7 @@ const toggleGroupItemClasses =
                     >
                         <Icon
                             icon="radix-icons:list-bullet"
-                            class="w-[15px] h-[15px]"
+                            class="w-4 h-4"
                         />
                     </ToggleGroupItem>
                     <ToggleGroupItem
@@ -70,7 +69,7 @@ const toggleGroupItemClasses =
                     >
                         <Icon
                             icon="radix-icons:image"
-                            class="w-[15px] h-[15px]"
+                            class="w-4 h-4"
                         />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
@@ -82,16 +81,14 @@ const toggleGroupItemClasses =
                         value="left"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:check" class="w-[15px] h-[15px]" />
+                        <Icon icon="lucide:check" class="w-4 h-4" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>
-            <div class="w-2"></div>
         </div>
-        <div class="h-3"></div>
-        <div class="flex flex-grow w-full">
+        <div class="flex flex-grow w-full mt-2">
             <div
-                class="w-full h-full bg-sky-700 rounded-md border flex items-center justify-center"
+                class="w-full h-full bg-sky-700 rounded-t-md flex items-center justify-center"
             >
                 THIS IS FOR EDITOR
             </div>

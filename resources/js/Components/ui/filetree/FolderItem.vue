@@ -8,50 +8,35 @@ import {
 } from "@/Components/ui/collapsible";
 import {
     ContextMenu,
-    ContextMenuCheckboxItem,
     ContextMenuContent,
     ContextMenuItem,
-    ContextMenuLabel,
-    ContextMenuRadioGroup,
-    ContextMenuRadioItem,
-    ContextMenuSeparator,
-    ContextMenuShortcut,
-    ContextMenuSub,
-    ContextMenuSubContent,
-    ContextMenuSubTrigger,
     ContextMenuTrigger,
 } from "@/Components/ui/context-menu";
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import { FileTreeItem } from "./model";
 
-
 const props = defineProps<{
     params: FileTreeItem;
 }>();
 
 const isOpen = ref(false);
-
-const fileTreeFolderClasses =
-    "flex flex-row border w-full p-2 text-sm items-center";
-
-const fileTreeFolderContentClasses = "w-full pl-5";
 </script>
 
 <template>
     <Collapsible v-model:open="isOpen">
         <ContextMenu>
             <ContextMenuTrigger>
-                <CollapsibleTrigger :class="fileTreeFolderClasses">
+                <CollapsibleTrigger class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-gray-50">
                     <Icon
                         v-if="isOpen"
                         icon="lucide:folder-open"
-                        class="w-[15px] h-[15px] mr-2 flex-shrink-0"
+                        class="w-4 h-4 mr-2 flex-shrink-0"
                     />
                     <Icon
                         v-else
                         icon="lucide:folder"
-                        class="w-[15px] h-[15px] mr-2 flex-shrink-0"
+                        class="w-4 h-4 mr-2 flex-shrink-0"
                     />
                     <div class="truncate">
                         {{ params.name }}
@@ -65,7 +50,7 @@ const fileTreeFolderContentClasses = "w-full pl-5";
                 <ContextMenuItem>Delete</ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>
-        <CollapsibleContent :class="fileTreeFolderContentClasses">
+        <CollapsibleContent class="pl-6">
             <div v-for="item in params.content">
                 <div v-if="item.isFolder">
                     <FolderItem :params="item"></FolderItem>

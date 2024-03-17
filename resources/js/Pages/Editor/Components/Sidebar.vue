@@ -4,27 +4,22 @@ import { Button } from '@/Components/ui/button'
 import logo from "@/Components/logo/logo.vue";
 
 const model = defineModel()
-
-function handleFilePanelButton() {
-    model.value = !model.value
-}
 </script>
 
 <template>
-    <div class="h-full w-20 flex flex-col justify-center items-center">
-        <Button variant="ghost" class="w-14 h-14">
-            <Archive @click="handleFilePanelButton"/>
-        </Button>
-        <div class="w-1 h-2"></div>
-        <Button variant="ghost" class="w-14 h-14">
-            <Settings />
-        </Button>
-        <div class="w-1 h-2"></div>
-        <Button variant="ghost" class="w-14 h-14">
-            <CircleHelp />
-        </Button>
-        <div class="flex flex-grow w-1"></div>
-        <logo class="fill-primary w-7" />
-        <div class="w-1 h-5"></div>
+    <div class="h-full flex flex-col justify-center items-center">
+        <div class="space-y-4 flex flex-col items-center">
+            <Button variant="ghost" class="w-14 h-14" @click="model = !model">
+                <Archive />
+            </Button>
+            <Button variant="ghost" class="w-14 h-14">
+                <Settings />
+            </Button>
+            <Button variant="ghost" class="w-14 h-14">
+                <CircleHelp />
+            </Button>
+        </div>
+        <div class="flex-grow"></div>
+        <logo class="fill-primary w-7 mb-5" />
     </div>
 </template>

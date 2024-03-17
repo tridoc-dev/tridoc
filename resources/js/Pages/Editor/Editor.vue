@@ -19,8 +19,8 @@ const openFilePanel = ref(false);
 
 <template>
     <div class="flex flex-col w-dvh h-dvh">
-        <Menu></Menu>
-        <div class="flex flex-grow flex-row">
+        <Menu />
+        <div class="flex flex-grow flex-row mr-2">
             <div class="h-full w-20">
                 <Sidebar v-model="openFilePanel"></Sidebar>
             </div>
@@ -32,13 +32,12 @@ const openFilePanel = ref(false);
                     <ResizablePanel>
                         <EditorPanel/>
                     </ResizablePanel>
-                    <ResizableHandle class="invisible" />
+                    <ResizableHandle class="invisible w-2" />
                     <ResizablePanel>
                         <PreviewPanel/>
                     </ResizablePanel>
                 </ResizablePanelGroup>
             </div>
-            <div class="w-2"></div>
         </div>
     </div>
 </template>
