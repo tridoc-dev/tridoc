@@ -13,7 +13,7 @@ import { ChevronRight } from "lucide-vue-next";
 
 <template>
     <div class="w-full h-fit grid grid-cols-3">
-        <Menubar class="border-none">
+        <Menubar class="border-none select-none">
             <MenubarMenu>
                 <p class="mx-4 font-figtree text-lg"><span class="font-bold mr-[1px]">Tri</span>doc</p>
             </MenubarMenu>
@@ -81,6 +81,6 @@ import { ChevronRight } from "lucide-vue-next";
             </div>
         </div></div>
         <div class="h-10 w-10"></div>
-        
+
     </div>
 </template>
