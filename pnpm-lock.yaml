@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@tanstack/vue-table':
+    specifier: ^8.13.2
+    version: 8.13.2(vue@3.4.21)
   '@vueuse/core':
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.21)
@@ -566,6 +569,21 @@ packages:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.1
     dev: true
+
+  /@tanstack/table-core@8.13.2:
+    resolution: {integrity: sha512-/2saD1lWBUV6/uNAwrsg2tw58uvMJ07bO2F1IWMxjFRkJiXKQRuc3Oq2aufeobD3873+4oIM/DRySIw7+QsPPw==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /@tanstack/vue-table@8.13.2(vue@3.4.21):
+    resolution: {integrity: sha512-yWqLT4glpjpNpN5HUOhpR/cwHJIjQKT/njiW5jQYYB0kxJ6qX3Ra1+frKM50F1K7y8mdce8btTKzRUzx4+q7mQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.2.33
+    dependencies:
+      '@tanstack/table-core': 8.13.2
+      vue: 3.4.21(typescript@5.4.2)
+    dev: false
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}

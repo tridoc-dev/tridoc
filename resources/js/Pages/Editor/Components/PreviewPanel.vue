@@ -49,7 +49,7 @@ const zoomRatioClasses =
             </div>
         </div>
         <div class="flex flex-grow w-full mt-2 drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)]">
-            <div class="w-full h-full bg-background rounded-t-md flex items-center justify-center">
+            <div class="w-full h-full border bg-background rounded-t-md flex items-center justify-center">
                 THIS IS FOR PREVIEW
             </div>
         </div>
