@@ -28,14 +28,16 @@ const items: FileTreeItem[] = [
 
 const toggleGroupItemClasses =
     "hover:bg-secondary text-primary data-[state=on]:bg-secondary data-[state=on]:text-primary flex h-[35px] w-[35px] items-center justify-center bg-card text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border";
+
+const toggleGroupRootClasses = "flex";
 </script>
 
 <template>
-    <div class="flex h-full flex-grow flex-col rounded-md border mr-2">
+    <div class="shadow-[0_0px_10px_0px_rgba(0,0,0,0.1)] flex h-full flex-grow flex-col rounded-md border mr-1">
         <div class="flex flex-row items-center m-2">
             <div class="text-md font-bold pl-3">Files</div>
             <div class="flex flex-grow"></div>
-            <ToggleGroupRoot type="multiple" class="flex">
+            <ToggleGroupRoot type="multiple" :class="toggleGroupRootClasses">
                 <ToggleGroupItem value="left" :class="toggleGroupItemClasses">
                     <Icon icon="lucide:folder-plus" class="w-4 h-4" />
                 </ToggleGroupItem>

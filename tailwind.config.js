@@ -21,6 +21,7 @@ export default {
     },
     extend: {
       colors: {
+        basebackground: '#eff0f3',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

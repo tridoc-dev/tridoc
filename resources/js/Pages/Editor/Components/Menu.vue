@@ -13,7 +13,7 @@ import { ChevronRight } from "lucide-vue-next";
 
 <template>
     <div class="w-full h-fit grid grid-cols-3">
-        <Menubar class="border-none select-none">
+        <Menubar class="border-none select-none bg-basebackground">
             <MenubarMenu>
                 <p class="mx-4 font-figtree text-lg"><span class="font-bold mr-[1px]">Tri</span>doc</p>
             </MenubarMenu>

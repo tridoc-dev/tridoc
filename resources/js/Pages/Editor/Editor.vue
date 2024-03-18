@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useColorMode } from "@vueuse/core";
+// import { useColorMode } from "@vueuse/core";
 import {
     ResizableHandle,
     ResizablePanel,
@@ -13,27 +13,27 @@ import PreviewPanel from "./Components/PreviewPanel.vue";
 import FilePanel from "./Components/FilePanel.vue";
 import { ref } from "vue";
 
-const mode = useColorMode();
+// const mode = useColorMode();
 const openFilePanel = ref(false);
 </script>
 
 <template>
-    <div class="flex flex-col w-dvh h-dvh">
-        <Menu />
+    <div class="flex flex-col w-dvh h-dvh bg-basebackground">
+        <Menu/>
         <div class="flex flex-grow flex-row mr-2">
             <div class="h-full w-20">
                 <Sidebar v-model="openFilePanel"></Sidebar>
             </div>
             <div class="h-full flex-grow">
-                <ResizablePanelGroup direction="horizontal">
-                    <ResizablePanel v-if="openFilePanel" :default-size="30">
-                        <FilePanel/>
+                <ResizablePanelGroup class="" direction="horizontal">
+                    <ResizablePanel class="p-2 pb-0 pr-0" v-if="openFilePanel" :default-size="30">
+                        <FilePanel class="bg-background"/>
                     </ResizablePanel>
-                    <ResizablePanel>
+                    <ResizablePanel class="p-2 pb-0 pr-1">
                         <EditorPanel/>
                     </ResizablePanel>
-                    <ResizableHandle class="invisible w-2" />
-                    <ResizablePanel>
+                    <ResizableHandle class="invisible" />
+                    <ResizablePanel class="p-2 pb-0 pl-1">
                         <PreviewPanel/>
                     </ResizablePanel>
                 </ResizablePanelGroup>
