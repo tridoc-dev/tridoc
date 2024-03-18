@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FolderItem from "./FolderItem.vue"
+import FolderItem from "./FolderItem.vue";
 import FileItem from "./FileItem.vue";
 import {
     Collapsible,
@@ -18,6 +18,7 @@ import { FileTreeItem } from "./model";
 
 const props = defineProps<{
     params: FileTreeItem;
+    indentSize: number;
 }>();
 
 const isOpen = ref(false);
@@ -27,7 +28,12 @@ const isOpen = ref(false);
     <Collapsible v-model:open="isOpen">
         <ContextMenu>
             <ContextMenuTrigger>
-                <CollapsibleTrigger class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-gray-50">
+                <CollapsibleTrigger
+                    class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-gray-50"
+                >
+                    <div v-for="i in props.indentSize">
+                        <div class="w-5"></div>
+                    </div>
                     <Icon
                         v-if="isOpen"
                         icon="lucide:folder-open"
@@ -50,13 +56,21 @@ const isOpen = ref(false);
                 <ContextMenuItem>Delete</ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>
-        <CollapsibleContent class="pl-6">
+        <CollapsibleContent
+            class="shadow-[inset_0px_5px_10px_-5px_rgba(0,0,0,0.1)]"
+        >
             <div v-for="item in params.content">
                 <div v-if="item.isFolder">
-                    <FolderItem :params="item"></FolderItem>
+                    <FolderItem
+                        :params="item"
+                        :indent-size="props.indentSize + 1"
+                    ></FolderItem>
                 </div>
                 <div v-else>
-                    <FileItem :params="item"></FileItem>
+                    <FileItem
+                        :params="item"
+                        :indent-size="props.indentSize + 1"
+                    ></FileItem>
                 </div>
             </div>
         </CollapsibleContent>

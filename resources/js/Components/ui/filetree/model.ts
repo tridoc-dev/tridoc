@@ -1,5 +1,5 @@
 export interface FileTreeItem {
     isFolder: boolean,
-    name: string;
-    content?: FileTreeItem[];
+    name: string,
+    content?: FileTreeItem[],
 }
