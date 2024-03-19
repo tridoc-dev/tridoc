@@ -43,8 +43,8 @@ export interface Project {
 }
 
 const tags: { name: string; color: string }[] = [
-    { name: "Document", color: "bg-blue-200 text-blue-800 border-blue-800" },
-    { name: "Report", color: "bg-purple-200 text-purple-800 border-purple-800" },
+    { name: "Document", color: "bg-blue-200 text-blue-800 border-blue-800 hover:bg-blue-400 hover:text-secondary" },
+    { name: "Report", color: "bg-purple-200 text-purple-800 border-purple-800 hover:bg-purple-400 hover:text-secondary" },
 ];
 
 const data: Project[] = [
@@ -202,7 +202,7 @@ const table = useVueTable({
 
 <template>
     <div
-        class="shadow-[0_0px_10px_0px_rgba(0,0,0,0.1)] flex flex-grow flex-col rounded-md border"
+        class=" flex flex-grow flex-col rounded-md border overflow-y-auto"
     >
         <div class="flex flex-col p-10">
             <div class="flex flex-col items-start">

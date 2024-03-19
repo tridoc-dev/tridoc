@@ -29,7 +29,7 @@ const isOpen = ref(false);
         <ContextMenu>
             <ContextMenuTrigger>
                 <CollapsibleTrigger
-                    class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-gray-50"
+                    class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-muted/50"
                 >
                     <div v-for="i in props.indentSize">
                         <div class="w-5"></div>
@@ -57,8 +57,16 @@ const isOpen = ref(false);
             </ContextMenuContent>
         </ContextMenu>
         <CollapsibleContent
-            class="shadow-[inset_0px_5px_10px_-5px_rgba(0,0,0,0.1)]"
+            class="flex flex-col relative"
         >
+            <div class="absolute flex flex-grow flex-row transition-all h-full data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                <div v-for="i in props.indentSize+1">
+                    <div class="w-5"></div>
+                </div>
+                <div
+                    class="w-[1px] bg-black border h-full z-10"
+                ></div>
+            </div>
             <div v-for="item in params.content">
                 <div v-if="item.isFolder">
                     <FolderItem

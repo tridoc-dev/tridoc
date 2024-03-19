@@ -26,7 +26,7 @@ const props = defineProps<{
 <template>
     <ContextMenu>
         <ContextMenuTrigger
-            class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-gray-50"
+            class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-muted/50"
         >
             <div v-for="i in props.indentSize">
                 <div class="w-5"></div>

@@ -16,12 +16,17 @@ const items: FileTreeItem[] = [
         isFolder: true,
         name: "test1",
         content: [
-            { isFolder: false, name: "test2" },
             {
                 isFolder: true,
                 name: "test3",
                 content: [{ isFolder: false, name: "test4" }],
             },
+            {
+                isFolder: true,
+                name: "test3",
+                content: [{ isFolder: false, name: "test4" }],
+            },
+            { isFolder: false, name: "test2" },
         ],
     },
 ];

@@ -13,9 +13,9 @@ import { ChevronRight } from "lucide-vue-next";
 
 <template>
     <div class="w-full h-fit grid grid-cols-3">
-        <Menubar class="border-none select-none bg-basebackground">
+        <Menubar class="pl-0 border-none select-none bg-basebackground">
             <MenubarMenu>
-                <p class="mx-4 font-figtree text-lg"><span class="font-bold mr-[1px]">Tri</span>doc</p>
+                <MenubarTrigger class="font-bold">Tridoc</MenubarTrigger>
             </MenubarMenu>
             <MenubarMenu>
                 <MenubarTrigger>File</MenubarTrigger>
@@ -71,16 +71,12 @@ import { ChevronRight } from "lucide-vue-next";
             </MenubarMenu>
         </Menubar>
         <div class="place-self-center">
-        <div class="h-10 flex items-center">
-            <div class="pr-1">
-                Test User
+            <div class="h-10 flex items-center text-sm">
+                <div class="pr-1">Test User</div>
+                <ChevronRight class="w-4" />
+                <div class="pl-1 font-bold">Dashboard</div>
             </div>
-            <ChevronRight class="w-5"/>
-            <div class="pl-1 font-bold">
-                Test Document
-            </div>
-        </div></div>
+        </div>
         <div class="h-10 w-10"></div>
-
     </div>
 </template>

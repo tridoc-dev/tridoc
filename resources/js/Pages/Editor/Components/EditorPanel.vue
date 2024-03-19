@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import { ToggleGroupItem, ToggleGroupRoot } from "radix-vue";
+import { Loader2 } from 'lucide-vue-next'
 import { Icon } from "@iconify/vue";
 
 const toggleGroupItemClasses =
-    "hover:bg-secondary text-primary data-[state=on]:bg-secondary data-[state=on]:text-primary flex h-[35px] w-[35px] items-center justify-center bg-card text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border";
+    "hover:bg-secondary text-primary flex h-[35px] w-[35px] items-center justify-center bg-card text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border";
+
+const toggleGroupErrorItemClasses =
+    "hover:bg-red-500 hover:text-secondary text-red-700 flex h-[35px] w-[35px] items-center justify-center bg-red-100 text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border border-red-700";
+
+const toggleGroupGoodItemClasses =
+    "hover:bg-green-500 hover:text-secondary text-green-700 flex h-[35px] w-[35px] items-center justify-center bg-green-100 text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border border-green-700";
+
+const toggleGroupWarningItemClasses =
+    "hover:bg-yellow-500 hover:text-secondary hover:text-secondary text-yellow-700 flex h-[35px] w-[35px] items-center justify-center bg-yellow-100 text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border border-yellow-700";
 
 const toggleGroupRootClasses = "flex";
+
+const state: string = 'good'
 </script>
 
 <template>
@@ -79,11 +91,29 @@ const toggleGroupRootClasses = "flex";
             <div class="flex flex-grow"></div>
             <div class="w-fit">
                 <ToggleGroupRoot :class="toggleGroupRootClasses">
-                    <ToggleGroupItem
+                    <ToggleGroupItem v-if="state=='error'"
+                        value="left"
+                        :class="toggleGroupErrorItemClasses"
+                    >
+                        <Icon icon="lucide:x" class="w-4 h-4" />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem v-if="state=='good'"
+                        value="left"
+                        :class="toggleGroupGoodItemClasses"
+                    >
+                        <Icon icon="lucide:check" class="w-4 h-4" />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem v-if="state=='warning'"
+                        value="left"
+                        :class="toggleGroupWarningItemClasses"
+                    >
+                        <Icon icon="lucide:triangle-alert" class="w-4 h-4" />
+                    </ToggleGroupItem>
+                    <ToggleGroupItem v-if="state=='loading'"
                         value="left"
                         :class="toggleGroupItemClasses"
                     >
-                        <Icon icon="lucide:check" class="w-4 h-4" />
+                        <Loader2 class="w-4 h-4 animate-spin" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>

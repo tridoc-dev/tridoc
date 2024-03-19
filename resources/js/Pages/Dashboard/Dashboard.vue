@@ -7,24 +7,38 @@ import {
 } from "@/Components/ui/resizable";
 
 import Menu from "./Components/Menu.vue";
-import Sidebar from "./Components/Sidebar.vue";
+import Sidebar from "@/Components/Sidebar.vue";
 import MainPanel from "./Components/MainPanel.vue";
 import { ref } from "vue";
+import { Archive, Settings, CircleHelp } from "lucide-vue-next";
+import { Button } from "@/Components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 
 // const mode = useColorMode();
 const openFilePanel = ref(false);
 </script>
 
 <template>
-    <div class="flex flex-col w-dvh h-dvh bg-basebackground">
-        <Menu class="flex"/>
-        <div class="flex flex-grow flex-row">
-            <div class="h-full w-20">
-                <Sidebar v-model="openFilePanel"></Sidebar>
-            </div>
-            <div class="h-full flex-grow flex flex-col">
-                <MainPanel class="m-2 mr-0 mb-0 bg-background"/>
-            </div>
+    <div class="w-dvh h-dvh grid grid-rows-[40px_1fr] grid-cols-[64px_1fr] bg-basebackground">
+        <div></div>
+        <Menu class="flex" />
+        <Sidebar>
+            <Avatar class="w-10 h-10 my-2">
+                <AvatarImage
+                    src="https://github.com/radix-vue.png"
+                    alt="@radix-vue"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Button variant="ghost" class="w-[54px] h-[54px]">
+                <Settings />
+            </Button>
+            <Button variant="ghost" class="w-[54px] h-[54px]">
+                <CircleHelp />
+            </Button>
+        </Sidebar>
+        <div class="shadow-[0_0px_10px_0px_rgba(0,0,0,0.1)] flex flex-grow overflow-y-scroll">
+            <MainPanel class="shadow-[0_0px_10px_0px_rgba(0,0,0,0.1)] bg-background" />
         </div>
     </div>
-</template>./Components/MainPanel.vue
+</template>
