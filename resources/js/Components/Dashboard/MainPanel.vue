@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import Separator from "@/Components/ui/separator/Separator.vue";
+import Separator from "../ui/separator/Separator.vue";
 import ProjectListAction from "./ProjectListAction.vue";
 
 import type {
@@ -21,7 +21,7 @@ import {
 import { h, ref, withModifiers } from "vue";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
-import Badge from "@/Components/ui/badge/Badge.vue";
+import Badge from "../ui/badge/Badge.vue";
 
 import {
     Table,

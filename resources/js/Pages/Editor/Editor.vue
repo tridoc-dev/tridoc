@@ -6,11 +6,11 @@ import {
     ResizablePanelGroup,
 } from "@/Components/ui/resizable";
 
-import Menu from "./Components/Menu.vue";
+import Menu from "@/Components/Editor/Menu.vue";
 import Sidebar from "@/Components/Sidebar.vue";
-import EditorPanel from "./Components/EditorPanel.vue";
-import PreviewPanel from "./Components/PreviewPanel.vue";
-import FilePanel from "./Components/FilePanel.vue";
+import EditorPanel from "@/Components/Editor/EditorPanel.vue";
+import PreviewPanel from "@/Components/Editor/PreviewPanel.vue";
+import FilePanel from "@/Components/Editor/FilePanel.vue";
 import { Button } from "@/Components/ui/button";
 import { Archive, Settings, CircleHelp } from "lucide-vue-next";
 import { ref } from "vue";

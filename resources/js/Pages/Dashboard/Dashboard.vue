@@ -1,16 +1,9 @@
 <script setup lang="ts">
-// import { useColorMode } from "@vueuse/core";
-import {
-    ResizableHandle,
-    ResizablePanel,
-    ResizablePanelGroup,
-} from "@/Components/ui/resizable";
-
-import Menu from "./Components/Menu.vue";
+import Menu from "@/Components/Dashboard/Menu.vue";
 import Sidebar from "@/Components/Sidebar.vue";
-import MainPanel from "./Components/MainPanel.vue";
+import MainPanel from "@/Components/Dashboard/MainPanel.vue";
 import { ref } from "vue";
-import { Archive, Settings, CircleHelp } from "lucide-vue-next";
+import { Settings, CircleHelp } from "lucide-vue-next";
 import { Button } from "@/Components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 

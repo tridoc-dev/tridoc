@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import logo from "@/Components/logo/logo.vue";
+import logo from "@/Components/TridocLogo.vue";
 </script>
 
 <template>
