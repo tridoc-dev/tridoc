@@ -9,6 +9,8 @@ import PreviewPanel from "@/Components/Editor/PreviewPanel.vue";
 import {Button} from "@/Components/ui/button";
 import {Archive, Settings, CircleHelp} from "lucide-vue-next";
 import {ref} from "vue";
+import FilePanel from "@/Components/Editor/FilePanel.vue";
+import SettingsPanel from "@/Components/Editor/SettingsPanel.vue";
 
 // const mode = useColorMode();
 const openFilePanel = ref(false);
@@ -17,7 +19,7 @@ const openSettingsPanel = ref(false);
 
 <template>
     <div class="w-dvh h-dvh max-w-screen flex bg-basebackground pr-2">
-        <Sidebar>
+        <Sidebar class="px-2">
             <Button
                 variant="ghost"
                 class="w-[54px] h-[54px]"
@@ -47,6 +49,9 @@ const openSettingsPanel = ref(false);
             <Menu />
 
             <div class="flex gap-x-2 overflow-hidden">
+                <FilePanel class="bg-background basis-1/4" v-if="openFilePanel" />
+                <SettingsPanel class="bg-background basis-1/4" v-if="openSettingsPanel" />
+
                 <EditorPanel class="basis-1/2" />
                 <PreviewPanel class="basis-1/2" />
             </div>
