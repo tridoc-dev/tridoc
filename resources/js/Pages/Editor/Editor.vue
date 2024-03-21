@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import {Splitpanes, Pane} from "splitpanes";
+// import { useColorMode } from "@vueuse/core";
+import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 
 import Menu from "@/Components/Editor/Menu.vue";
 import Sidebar from "@/Components/Sidebar.vue";
 import EditorPanel from "@/Components/Editor/EditorPanel.vue";
 import PreviewPanel from "@/Components/Editor/PreviewPanel.vue";
-import {Button} from "@/Components/ui/button";
-import {Archive, Settings, CircleHelp} from "lucide-vue-next";
-import {ref} from "vue";
 import FilePanel from "@/Components/Editor/FilePanel.vue";
+import { Button } from "@/Components/ui/button";
+import { Archive, Settings, CircleHelp } from "lucide-vue-next";
+import { ref } from "vue";
 import SettingsPanel from "@/Components/Editor/SettingsPanel.vue";
 
 // const mode = useColorMode();
@@ -18,8 +19,12 @@ const openSettingsPanel = ref(false);
 </script>
 
 <template>
-    <div class="w-dvh h-dvh max-w-screen flex bg-basebackground pr-2">
-        <Sidebar class="px-2">
+    <div
+        class="w-dvh h-dvh grid grid-rows-[40px_1fr] grid-cols-[64px_1fr] bg-basebackground z-0"
+    >
+        <div></div>
+        <Menu class="flex" />
+        <Sidebar>
             <Button
                 variant="ghost"
                 class="w-[54px] h-[54px]"
@@ -28,7 +33,7 @@ const openSettingsPanel = ref(false);
                     openFilePanel = !openFilePanel;
                 "
             >
-                <Archive/>
+                <Archive />
             </Button>
             <Button
                 variant="ghost"
@@ -38,23 +43,27 @@ const openSettingsPanel = ref(false);
                     openSettingsPanel = !openSettingsPanel;
                 "
             >
-                <Settings/>
+                <Settings />
             </Button>
             <Button variant="ghost" class="w-[54px] h-[54px]">
-                <CircleHelp/>
+                <CircleHelp />
             </Button>
         </Sidebar>
-
-        <div class="flex flex-col flex-grow">
-            <Menu />
-
-            <div class="flex gap-x-2 overflow-hidden">
-                <FilePanel class="bg-background basis-1/4" v-if="openFilePanel" />
-                <SettingsPanel class="bg-background basis-1/4" v-if="openSettingsPanel" />
-
-                <EditorPanel class="basis-1/2" />
-                <PreviewPanel class="basis-1/2" />
-            </div>
+        <div class="flex flex-grow">
+            <splitpanes class="default-theme">
+                <pane v-if="openFilePanel">
+                    <FilePanel class="bg-background" />
+                </pane>
+                <pane v-if="openSettingsPanel">
+                    <SettingsPanel class="bg-background" />
+                </pane>
+                <pane class="mr-[1px]">
+                    <EditorPanel />
+                </pane>
+                <pane class="mr-2">
+                    <PreviewPanel />
+                </pane>
+            </splitpanes>
         </div>
     </div>
 </template>
@@ -64,11 +73,9 @@ const openSettingsPanel = ref(false);
     transition: none !important;
     overflow: visible;
 }
-
 .splitpanes.default-theme .splitpanes__splitter {
     background-color: transparent;
 }
-
 .splitpanes.default-theme .splitpanes__splitter:after,
 .splitpanes.default-theme .splitpanes__splitter:before {
     display: none;
