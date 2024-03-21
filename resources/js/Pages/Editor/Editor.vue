@@ -1,5 +1,7 @@
 <script setup lang="ts">
 // import { useColorMode } from "@vueuse/core";
+import { Splitpanes, Pane } from "splitpanes";
+import "splitpanes/dist/splitpanes.css";
 import {
     ResizableHandle,
     ResizablePanel,
@@ -14,9 +16,11 @@ import FilePanel from "@/Components/Editor/FilePanel.vue";
 import { Button } from "@/Components/ui/button";
 import { Archive, Settings, CircleHelp } from "lucide-vue-next";
 import { ref } from "vue";
+import SettingsPanel from "@/Components/Editor/SettingsPanel.vue";
 
 // const mode = useColorMode();
 const openFilePanel = ref(false);
+const openSettingsPanel = ref(false);
 </script>
 
 <template>
@@ -29,11 +33,21 @@ const openFilePanel = ref(false);
             <Button
                 variant="ghost"
                 class="w-[54px] h-[54px]"
-                @click="openFilePanel = !openFilePanel"
+                @click="
+                    openSettingsPanel = false;
+                    openFilePanel = !openFilePanel;
+                "
             >
                 <Archive />
             </Button>
-            <Button variant="ghost" class="w-[54px] h-[54px]">
+            <Button
+                variant="ghost"
+                class="w-[54px] h-[54px]"
+                @click="
+                    openFilePanel = false;
+                    openSettingsPanel = !openSettingsPanel;
+                "
+            >
                 <Settings />
             </Button>
             <Button variant="ghost" class="w-[54px] h-[54px]">
@@ -41,23 +55,34 @@ const openFilePanel = ref(false);
             </Button>
         </Sidebar>
         <div class="flex flex-grow">
-            <ResizablePanelGroup direction="horizontal" style="overflow: visible">
-                <ResizablePanel
-                    class="pb-0 pr-1"
-                    v-if="openFilePanel"
-                    :default-size="30"
-                    style="overflow: visible"
-                    >
+            <splitpanes class="default-theme">
+                <pane v-if="openFilePanel">
                     <FilePanel class="bg-background" />
-                </ResizablePanel>
-                <ResizablePanel class="pb-0 pr-1"  style="overflow: visible">
+                </pane>
+                <pane v-if="openSettingsPanel">
+                    <SettingsPanel class="bg-background" />
+                </pane>
+                <pane class="mr-[1px]">
                     <EditorPanel />
-                </ResizablePanel>
-                <ResizableHandle class="invisible" />
-                <ResizablePanel class="pb-0 pl-1 pr-2"  style="overflow: visible">
+                </pane>
+                <pane class="mr-2">
                     <PreviewPanel />
-                </ResizablePanel>
-            </ResizablePanelGroup>
+                </pane>
+            </splitpanes>
         </div>
     </div>
 </template>
+
+<style>
+.splitpanes .splitpanes__pane {
+    transition: none !important;
+    overflow: visible;
+}
+.splitpanes.default-theme .splitpanes__splitter {
+    background-color: transparent;
+}
+.splitpanes.default-theme .splitpanes__splitter:after,
+.splitpanes.default-theme .splitpanes__splitter:before {
+    display: none;
+}
+</style>

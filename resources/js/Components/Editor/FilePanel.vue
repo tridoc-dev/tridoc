@@ -38,7 +38,7 @@ const toggleGroupRootClasses = "flex";
 </script>
 
 <template>
-    <div class="shadow-[0_0px_10px_0px_rgba(0,0,0,0.1)] flex h-full flex-grow flex-col rounded-md border mr-1">
+    <div class="shadow-[0_0px_10px_0px_rgba(0,0,0,0.1)] flex h-full flex-grow flex-col rounded-md border mr-[1px]">
         <div class="flex flex-row items-center m-2">
             <div class="text-md font-bold pl-3">Files</div>
             <div class="flex flex-grow"></div>
