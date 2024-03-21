@@ -21,8 +21,8 @@ const state: string = 'good'
 </script>
 
 <template>
-    <div class="w-full h-full flex flex-col">
-        <div class="flex flex-row">
+    <div class="flex flex-col gap-y-2">
+        <div class="flex flex-row flex-auto">
             <div class="w-fit">
                 <ToggleGroupRoot type="multiple" :class="toggleGroupRootClasses">
                     <ToggleGroupItem
@@ -118,12 +118,9 @@ const state: string = 'good'
                 </ToggleGroupRoot>
             </div>
         </div>
-        <div class="flex flex-grow w-full mt-2 drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)]">
-            <div
-                class="w-full h-full border bg-background rounded-t-md flex items-center justify-center"
-            >
-                THIS IS FOR EDITOR
-            </div>
+
+        <div class="drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)] border bg-background rounded-t-md overflow-scroll flex-auto">
+                <p v-for="i in 100">lonnnnnnnng</p>
         </div>
     </div>
 </template>
