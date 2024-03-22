@@ -123,10 +123,22 @@ const state: string = 'good'
             <div
                 class="w-full h-full border bg-background rounded-t-md flex items-center justify-center overflow-hidden"
             >
-                <div class="w-full h-full">
+                <div class="w-full h-full root-wrapper">
                     <CodeMirrorEditor/>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<style>
+.root-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .cm-editor {
+        width: 0;
+        flex-grow: 1;
+    }
+}
+</style>
