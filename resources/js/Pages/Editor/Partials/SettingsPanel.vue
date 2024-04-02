@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Separator from "../ui/separator/Separator.vue";
+import Separator from "../../../Components/ui/separator/Separator.vue";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 </script>
