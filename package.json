@@ -23,6 +23,7 @@
     "dependencies": {
         "@codemirror/language": "^6.10.1",
         "@codemirror/legacy-modes": "^6.3.3",
+        "@replit/codemirror-vim": "^6.2.1",
         "@tanstack/vue-table": "^8.13.2",
         "@vueuse/core": "^10.9.0",
         "class-variance-authority": "^0.7.0",

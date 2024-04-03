@@ -17,6 +17,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 // const mode = useColorMode();
 const openFilePanel = ref(false);
 const openSettingsPanel = ref(false);
+
+const enableVimMode = ref(false)
 </script>
 
 <template>
@@ -58,10 +60,10 @@ const openSettingsPanel = ref(false);
                         <FilePanel class="bg-background"/>
                     </pane>
                     <pane v-if="openSettingsPanel">
-                        <SettingsPanel class="bg-background"/>
+                        <SettingsPanel class="bg-background" v-model:enable-vim-mode="enableVimMode"/>
                     </pane>
                     <pane class="mr-[1px]">
-                        <EditorPanel/>
+                        <EditorPanel v-model:enable-vim-mode="enableVimMode"/>
                     </pane>
                     <pane class="mr-2">
                         <PreviewPanel/>

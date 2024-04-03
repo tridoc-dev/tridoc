@@ -2,6 +2,9 @@
 import Separator from "../../../Components/ui/separator/Separator.vue";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import { Switch } from '@/Components/ui/switch'
+
+const enableVimMode = defineModel('enableVimMode')
 </script>
 
 <template>
@@ -13,6 +16,11 @@ import { Label } from "@/Components/ui/label";
         </div>
         <Separator />
         <div class="flex flex-col p-4 gap-4">
+            <div class="flex-row w-full flex items-center space-x-2">
+                <Label for="enableVimMode">Enable Vim Mode</Label>
+                <div class="flex-grow"></div>
+                <Switch id="enableVimMode" :checked="Boolean(enableVimMode)" @update:checked="enableVimMode=!enableVimMode;console.log(enableVimMode)"/>
+            </div>
             <div class="grid w-full max-w-sm items-center gap-2">
                 <Label for="editorFontFamily">Editor Font Family</Label>
                 <Input id="editorFontFamily" type="editorFontFamily" placeholder="Editor Font Family" />
