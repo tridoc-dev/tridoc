@@ -21,7 +21,10 @@ const toggleGroupRootClasses = "flex";
 
 const state: string = 'good'
 
+// v-model pass to codemirror
 const enableVimMode = defineModel('enableVimMode')
+const fontFamily = defineModel('fontFamily')
+const fontSize = defineModel('fontSize')
 </script>
 
 <template>
@@ -29,95 +32,46 @@ const enableVimMode = defineModel('enableVimMode')
         <div class="flex flex-row">
             <div class="w-fit">
                 <ToggleGroupRoot type="multiple" :class="toggleGroupRootClasses">
-                    <ToggleGroupItem
-                        value="left"
-                        :class="toggleGroupItemClasses"
-                        @click="console.log(enableVimMode)"
-                    >
+                    <ToggleGroupItem value="left" :class="toggleGroupItemClasses" @click="console.log(enableVimMode)">
                         <Icon icon="lucide:undo" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem
-                        value="center"
-                        :class="toggleGroupItemClasses"
-                    >
+                    <ToggleGroupItem value="center" :class="toggleGroupItemClasses">
                         <Icon icon="lucide:redo" class="w-4 h-4" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>
             <div class="w-fit ml-4">
                 <ToggleGroupRoot type="multiple" :class="toggleGroupRootClasses">
-                    <ToggleGroupItem
-                        value="bold"
-                        :class="toggleGroupItemClasses"
-                    >
-                        <Icon
-                            icon="radix-icons:font-bold"
-                            class="w-4 h-4"
-                        />
+                    <ToggleGroupItem value="bold" :class="toggleGroupItemClasses">
+                        <Icon icon="radix-icons:font-bold" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem
-                        value="italic"
-                        :class="toggleGroupItemClasses"
-                    >
-                        <Icon
-                            icon="radix-icons:font-italic"
-                            class="w-4 h-4"
-                        />
+                    <ToggleGroupItem value="italic" :class="toggleGroupItemClasses">
+                        <Icon icon="radix-icons:font-italic" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem
-                        value="strikethrough"
-                        :class="toggleGroupItemClasses"
-                    >
-                        <Icon
-                            icon="radix-icons:strikethrough"
-                            class="w-4 h-4"
-                        />
+                    <ToggleGroupItem value="strikethrough" :class="toggleGroupItemClasses">
+                        <Icon icon="radix-icons:strikethrough" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem
-                        value="strikethrough"
-                        :class="toggleGroupItemClasses"
-                    >
-                        <Icon
-                            icon="radix-icons:list-bullet"
-                            class="w-4 h-4"
-                        />
+                    <ToggleGroupItem value="strikethrough" :class="toggleGroupItemClasses">
+                        <Icon icon="radix-icons:list-bullet" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem
-                        value="strikethrough"
-                        :class="toggleGroupItemClasses"
-                    >
-                        <Icon
-                            icon="radix-icons:image"
-                            class="w-4 h-4"
-                        />
+                    <ToggleGroupItem value="strikethrough" :class="toggleGroupItemClasses">
+                        <Icon icon="radix-icons:image" class="w-4 h-4" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
             </div>
             <div class="flex flex-grow"></div>
             <div class="w-fit">
                 <ToggleGroupRoot :class="toggleGroupRootClasses">
-                    <ToggleGroupItem v-if="state=='error'"
-                        value="left"
-                        :class="toggleGroupErrorItemClasses"
-                    >
+                    <ToggleGroupItem v-if="state == 'error'" value="left" :class="toggleGroupErrorItemClasses">
                         <Icon icon="lucide:x" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem v-if="state=='good'"
-                        value="left"
-                        :class="toggleGroupGoodItemClasses"
-                    >
+                    <ToggleGroupItem v-if="state == 'good'" value="left" :class="toggleGroupGoodItemClasses">
                         <Icon icon="lucide:check" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem v-if="state=='warning'"
-                        value="left"
-                        :class="toggleGroupWarningItemClasses"
-                    >
+                    <ToggleGroupItem v-if="state == 'warning'" value="left" :class="toggleGroupWarningItemClasses">
                         <Icon icon="lucide:triangle-alert" class="w-4 h-4" />
                     </ToggleGroupItem>
-                    <ToggleGroupItem v-if="state=='loading'"
-                        value="left"
-                        :class="toggleGroupItemClasses"
-                    >
+                    <ToggleGroupItem v-if="state == 'loading'" value="left" :class="toggleGroupItemClasses">
                         <Loader2 class="w-4 h-4 animate-spin" />
                     </ToggleGroupItem>
                 </ToggleGroupRoot>
@@ -125,10 +79,10 @@ const enableVimMode = defineModel('enableVimMode')
         </div>
         <div class="flex flex-grow w-full mt-2 drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)] h-0">
             <div
-                class="w-full h-full border bg-background rounded-t-md flex items-center justify-center overflow-hidden"
-            >
+                class="w-full h-full border bg-background rounded-t-md flex items-center justify-center overflow-hidden">
                 <div class="w-full h-full root-wrapper">
-                    <CodeMirrorEditor :enableVimMode="enableVimMode" />
+                    <CodeMirrorEditor :enableVimMode="enableVimMode" :fontSize="fontSize"
+                        :fontFamily="fontFamily" />
                 </div>
             </div>
         </div>

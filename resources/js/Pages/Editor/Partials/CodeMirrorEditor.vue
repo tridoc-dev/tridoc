@@ -1,15 +1,16 @@
 <template>
-  <codemirror v-model="code" placeholder="Code goes here..." :style="{ height: '100%' }" :autofocus="true"
-    :indent-with-tab="true" :tab-size="2" :extensions="extensions" @ready="handleReady" @change="log('change', $event)"
-    @focus="log('focus', $event)" @blur="log('blur', $event)" />
+  <codemirror v-model="code" placeholder="Code goes here..." :autofocus="true" :indent-with-tab="true" :tab-size="2"
+    :extensions="extensions" @ready="handleReady" @change="log('change', $event)" @focus="log('focus', $event)"
+    @blur="log('blur', $event)" />
 </template>
 
 <script>
-import { defineComponent, ref, shallowRef, watchEffect } from 'vue'
-import { Codemirror } from 'vue-codemirror'
-import { stex } from '@codemirror/legacy-modes/mode/stex'
-import { StreamLanguage } from "@codemirror/language"
-import { vim } from "@replit/codemirror-vim"
+import { defineComponent, ref, shallowRef, watchEffect } from "vue";
+import { Codemirror } from "vue-codemirror";
+import { stex } from "@codemirror/legacy-modes/mode/stex";
+import { StreamLanguage } from "@codemirror/language";
+import { vim } from "@replit/codemirror-vim";
+import { EditorView } from "codemirror";
 
 const demoCode = `\\documentclass{article}
 \\usepackage{amsmath}% For the equation* environment
@@ -42,48 +43,71 @@ This is also the same:
 \\begin{equation*}
 \\sqrt{x^2+1}
 \\end{equation*}
-\\end{document}`
+\\end{document}`;
 
 export default defineComponent({
   components: {
-    Codemirror
+    Codemirror,
   },
   props: {
-    enableVimMode: Boolean
+    enableVimMode: Boolean,
+    fontFamily: String,
+    fontSize: String,
   },
   setup(props) {
-    const code = ref(`${demoCode}`)
+    const code = ref(`${demoCode}`);
     // const extensions = [javascript(), oneDark]
-    const extensions = ref([StreamLanguage.define(stex)])
+    const extensions = ref([StreamLanguage.define(stex)]);
+
+    const theme = ref(EditorView.theme({
+      '.cm-scroller': {
+        "fontSize": props.fontSize + "px",
+        "fontFamily": props.fontFamily
+      }
+    }))
 
     watchEffect(() => {
-      extensions.value = props.enableVimMode ? [StreamLanguage.define(stex), vim()] : [StreamLanguage.define(stex)]
+      theme.value = EditorView.theme({
+        '.cm-scroller': {
+          "fontSize": props.fontSize + "px",
+          "fontFamily": props.fontFamily
+        }
+      })
     })
 
+    watchEffect(() => {
+      extensions.value = props.enableVimMode
+        ? [StreamLanguage.define(stex), vim(), theme.value]
+        : [StreamLanguage.define(stex), theme.value];
+    });
+
     // Codemirror EditorView instance ref
-    const view = shallowRef()
+    const view = shallowRef();
     const handleReady = (payload) => {
-      view.value = payload.view
-    }
+      view.value = payload.view;
+    };
 
     // Status is available at all times via Codemirror EditorView
     const getCodemirrorStates = () => {
-      const state = view.value.state
-      const ranges = state.selection.ranges
-      const selected = ranges.reduce((r, range) => r + range.to - range.from, 0)
-      const cursor = ranges[0].anchor
-      const length = state.doc.length
-      const lines = state.doc.lines
+      const state = view.value.state;
+      const ranges = state.selection.ranges;
+      const selected = ranges.reduce(
+        (r, range) => r + range.to - range.from,
+        0
+      );
+      const cursor = ranges[0].anchor;
+      const length = state.doc.length;
+      const lines = state.doc.lines;
       // more state info ...
       // return ...
-    }
+    };
 
     return {
       code,
       extensions,
       handleReady,
-      log: console.log
-    }
-  }
-})
+      log: console.log,
+    };
+  },
+});
 </script>

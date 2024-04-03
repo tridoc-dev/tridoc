@@ -4,7 +4,9 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Switch } from '@/Components/ui/switch'
 
-const enableVimMode = defineModel('enableVimMode')
+const enableVimMode = defineModel<boolean>('enableVimMode')
+const fontFamily = defineModel<string>('fontFamily')
+const fontSize = defineModel<string>('fontSize')
 </script>
 
 <template>
@@ -19,15 +21,15 @@ const enableVimMode = defineModel('enableVimMode')
             <div class="flex-row w-full flex items-center space-x-2">
                 <Label for="enableVimMode">Enable Vim Mode</Label>
                 <div class="flex-grow"></div>
-                <Switch id="enableVimMode" :checked="Boolean(enableVimMode)" @update:checked="enableVimMode=!enableVimMode;console.log(enableVimMode)"/>
+                <Switch id="enableVimMode" :checked="enableVimMode" @update:checked="enableVimMode=!enableVimMode"/>
             </div>
             <div class="grid w-full max-w-sm items-center gap-2">
                 <Label for="editorFontFamily">Editor Font Family</Label>
-                <Input id="editorFontFamily" type="editorFontFamily" placeholder="Editor Font Family" />
+                <Input id="editorFontFamily" type="editorFontFamily" placeholder="Editor Font Family" v-model="fontFamily"/>
             </div>
             <div class="grid w-full max-w-sm items-center gap-2">
                 <Label for="editorFontSize">Editor Font Size</Label>
-                <Input id="editorFontSize" type="editorFontSize" placeholder="Editor Font Size" />
+                <Input id="editorFontSize" type="editorFontSize" placeholder="Editor Font Size" v-model="fontSize"/>
             </div>
         </div>
     </div>
