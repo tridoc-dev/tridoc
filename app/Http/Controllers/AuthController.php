@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): RedirectResponse
     {
-        // internal method provided by Laravel
+        // see LoginRequest.php for the authenticate method
         $request->authenticate();
 
         // regenerate the session ID

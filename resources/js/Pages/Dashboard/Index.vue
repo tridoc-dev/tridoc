@@ -6,12 +6,15 @@ import {Settings, CircleHelp} from "lucide-vue-next";
 import {Button} from "@/Components/ui/button";
 import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import {Head} from "@inertiajs/vue3";
 
 // const mode = useColorMode();
 const openFilePanel = ref(false);
 </script>
 
 <template>
+    <Head title="Dashboard" />
+    
     <AuthenticatedLayout>
         <template #menu>
             <Menu class="flex" />

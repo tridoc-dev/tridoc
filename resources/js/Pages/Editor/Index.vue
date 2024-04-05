@@ -4,7 +4,6 @@ import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 
 import Menu from "@/Pages/Editor/Partials/Menu.vue";
-import Sidebar from "@/Components/Sidebar.vue";
 import EditorPanel from "@/Pages/Editor/Partials/EditorPanel.vue";
 import PreviewPanel from "@/Pages/Editor/Partials/PreviewPanel.vue";
 import FilePanel from "@/Pages/Editor/Partials/FilePanel.vue";
