@@ -11,6 +11,8 @@ import { stex } from "@codemirror/legacy-modes/mode/stex";
 import { StreamLanguage } from "@codemirror/language";
 import { vim } from "@replit/codemirror-vim";
 import { EditorView } from "codemirror";
+import { completeFromList, autocompletion } from "@codemirror/autocomplete"
+import texSnippets from "@/lib/tex.snippet.json"
 
 const demoCode = `\\documentclass{article}
 \\usepackage{amsmath}% For the equation* environment
@@ -56,15 +58,10 @@ export default defineComponent({
   },
   setup(props) {
     const code = ref(`${demoCode}`);
-    // const extensions = [javascript(), oneDark]
-    const extensions = ref([StreamLanguage.define(stex)]);
+    const completions = completeFromList(texSnippets)
 
-    const theme = ref(EditorView.theme({
-      '.cm-scroller': {
-        "fontSize": props.fontSize + "px",
-        "fontFamily": props.fontFamily
-      }
-    }))
+    const theme = ref()
+    const extensions = ref([])
 
     watchEffect(() => {
       theme.value = EditorView.theme({
@@ -77,8 +74,8 @@ export default defineComponent({
 
     watchEffect(() => {
       extensions.value = props.enableVimMode
-        ? [StreamLanguage.define(stex), vim(), theme.value]
-        : [StreamLanguage.define(stex), theme.value];
+        ? [StreamLanguage.define(stex), vim(), theme.value, autocompletion({override: [completions]})]
+        : [StreamLanguage.define(stex), theme.value, autocompletion({override: [completions]})];
     });
 
     // Codemirror EditorView instance ref
