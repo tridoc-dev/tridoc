@@ -1,7 +1,5 @@
 FROM ubuntu:jammy
 
-RUN sed -i 's#http://ports.ubuntu.com#http://mirrors.seu.edu.cn#' /etc/apt/sources.list
-
 RUN apt-get update \
 &&  apt-get install -y \
       build-essential wget net-tools unzip time imagemagick optipng strace nginx git python3 python-is-python3 zlib1g-dev libpcre3-dev gettext-base libwww-perl ca-certificates curl gnupg \
@@ -45,5 +43,6 @@ RUN mkdir /install-tl-unx \
       synctex \
       etoolbox \
       xetex \
+      scheme-full \
 &&  tlmgr path add \
 &&  rm -rf /install-tl-unx
