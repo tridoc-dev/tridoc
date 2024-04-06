@@ -1,0 +1,49 @@
+FROM debian:bookworm
+
+RUN apt-get update \
+&&  apt-get install -y \
+      unattended-upgrades \
+      build-essential wget net-tools unzip time imagemagick optipng strace nginx git python3 python-is-python3 zlib1g-dev libpcre3-dev gettext-base libwww-perl ca-certificates curl gnupg \
+      qpdf \
+      aspell aspell-en aspell-af aspell-am aspell-ar aspell-ar-large aspell-bg aspell-bn aspell-br aspell-ca aspell-cs aspell-cy aspell-da aspell-de aspell-de-1901 aspell-el aspell-eo aspell-es aspell-et aspell-eu-es aspell-fa aspell-fo aspell-fr aspell-ga aspell-gl-minimos aspell-gu aspell-he aspell-hi aspell-hr aspell-hsb aspell-hu aspell-hy aspell-id aspell-is aspell-it aspell-kk aspell-kn aspell-ku aspell-lt aspell-lv aspell-ml aspell-mr aspell-nl aspell-no aspell-nr aspell-ns  aspell-pa aspell-pl aspell-pt aspell-pt-br aspell-ro aspell-ru aspell-sk aspell-sl aspell-ss aspell-st aspell-sv aspell-tl aspell-tn aspell-ts aspell-uk aspell-uz aspell-xh aspell-zu \
+&&  unattended-upgrade -v \
+
+# Install TexLive
+# ---------------
+# CTAN mirrors occasionally fail, in that case install TexLive using a
+# different server, for example https://ctan.crest.fr
+#
+# # docker build \
+#     --build-arg TEXLIVE_MIRROR=https://ctan.crest.fr/tex-archive/systems/texlive/tlnet \
+#     -f Dockerfile-base -t sharelatex/sharelatex-base .
+ARG TEXLIVE_MIRROR=https://mirrors.mit.edu/CTAN/systems/texlive/tlnet
+
+RUN mkdir /install-tl-unx \
+&&  wget --quiet https://tug.org/texlive/files/texlive.asc \
+&&  gpg --import texlive.asc \
+&&  rm texlive.asc \
+&&  wget --quiet ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz \
+&&  wget --quiet ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz.sha512 \
+&&  wget --quiet ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz.sha512.asc \
+&&  gpg --verify install-tl-unx.tar.gz.sha512.asc \
+&&  sha512sum -c install-tl-unx.tar.gz.sha512 \
+&&  tar -xz -C /install-tl-unx --strip-components=1 -f install-tl-unx.tar.gz \
+&&  rm install-tl-unx.tar.gz* \
+&&  echo "tlpdbopt_autobackup 0" >> /install-tl-unx/texlive.profile \
+&&  echo "tlpdbopt_install_docfiles 0" >> /install-tl-unx/texlive.profile \
+&&  echo "tlpdbopt_install_srcfiles 0" >> /install-tl-unx/texlive.profile \
+&&  echo "selected_scheme scheme-basic" >> /install-tl-unx/texlive.profile \
+    \
+&&  /install-tl-unx/install-tl \
+      -profile /install-tl-unx/texlive.profile \
+      -repository ${TEXLIVE_MIRROR} \
+    \
+&&  $(find /usr/local/texlive -name tlmgr) path add \
+&&  tlmgr install --repository ${TEXLIVE_MIRROR} \
+      latexmk \
+      texcount \
+      synctex \
+      etoolbox \
+      xetex \
+&&  tlmgr path add \
+&&  rm -rf /install-tl-unx
