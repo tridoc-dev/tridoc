@@ -3,6 +3,8 @@ name: Build Worker Image
 on:
   push:
     paths: ["build/worker/**"]
+  schedule:
+    - cron: '30 2 * * 1'
 
 permissions:
   contents: read
@@ -33,7 +35,7 @@ jobs:
         id: meta
         with:
           images: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/worker
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/worker-base
           tags: |
             type=ref,event=branch
             type=schedule,pattern={{date 'YYYYMMDD'}}
@@ -43,6 +45,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./build/worker
+          file: ./build/worker/Dockerfile.base
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64

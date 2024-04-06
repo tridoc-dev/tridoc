@@ -43,6 +43,5 @@ RUN mkdir /install-tl-unx \
       synctex \
       etoolbox \
       xetex \
-      scheme-full \
 &&  tlmgr path add \
 &&  rm -rf /install-tl-unx
