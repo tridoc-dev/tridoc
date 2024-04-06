@@ -1,0 +1,9 @@
+FROM ghcr.io/tridoc-dev/tridoc/worker-base:latest
+
+# docker build \
+#     --build-arg TEXLIVE_MIRROR=https://ctan.crest.fr/tex-archive/systems/texlive/tlnet \
+#     -f Dockerfile.full -t tridoc/worker .
+ARG TEXLIVE_MIRROR=https://mirrors.seu.edu.cn/CTAN/systems/texlive/tlnet
+
+RUN tlmgr install --repository ${TEXLIVE_MIRROR} scheme-full \
+    && tlmgr path add
