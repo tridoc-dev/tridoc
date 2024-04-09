@@ -36,6 +36,9 @@
         "tailwind-merge": "^2.2.1",
         "tailwindcss-animate": "^1.0.7",
         "typescript": "^5.4.2",
-        "vue-codemirror": "^6.1.1"
+        "vue-codemirror": "^6.1.1",
+        "y-codemirror.next": "^0.3.3",
+        "y-websocket": "^2.0.2",
+        "yjs": "^13.6.14"
     }
 }

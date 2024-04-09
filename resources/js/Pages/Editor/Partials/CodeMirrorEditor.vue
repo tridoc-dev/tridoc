@@ -12,6 +12,9 @@ import { StreamLanguage } from "@codemirror/language";
 import { vim } from "@replit/codemirror-vim";
 import { EditorView } from "codemirror";
 import { completeFromList, autocompletion } from "@codemirror/autocomplete"
+import * as Y from "yjs"
+import { WebsocketProvider } from "y-websocket"
+import { yCollab } from "y-codemirror.next"
 import texSnippets from "@/lib/tex.snippet.json"
 
 const demoCode = `\\documentclass{article}
@@ -57,11 +60,19 @@ export default defineComponent({
     fontSize: String,
   },
   setup(props) {
-    const code = ref(`${demoCode}`);
     const completions = completeFromList(texSnippets)
-
+    
     const theme = ref()
     const extensions = ref([])
+    
+    const ydoc = new Y.Doc()
+    const provider = new WebsocketProvider(
+      'ws://localhost:8080',
+      'codemirror-demo',
+      ydoc
+    )
+    const ytext = ydoc.getText('codemirror-demo')
+    const code = ytext.toString()
 
     watchEffect(() => {
       theme.value = EditorView.theme({
@@ -74,8 +85,8 @@ export default defineComponent({
 
     watchEffect(() => {
       extensions.value = props.enableVimMode
-        ? [StreamLanguage.define(stex), vim(), theme.value, autocompletion({override: [completions]})]
-        : [StreamLanguage.define(stex), theme.value, autocompletion({override: [completions]})];
+        ? [StreamLanguage.define(stex), vim(), theme.value, autocompletion({ override: [completions] }), yCollab(ytext)]
+        : [StreamLanguage.define(stex), theme.value, autocompletion({ override: [completions] }), yCollab(ytext)];
     });
 
     // Codemirror EditorView instance ref
