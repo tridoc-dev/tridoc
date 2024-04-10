@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\Heartbeat;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;

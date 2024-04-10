@@ -8,13 +8,25 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
 
+import LaravelEcho from "@/lib/echo";
+
+LaravelEcho.instance.channel("heartbeat").listen(".heartbeat", (e: any) => {
+    console.log(e);
+});
+
+setInterval(() => {
+    LaravelEcho.pusher.send_event("ClientPing", {
+        message: "I'm alive",
+    });
+}, 5000);
+
 // const mode = useColorMode();
 const openFilePanel = ref(false);
 </script>
 
 <template>
     <Head title="Dashboard" />
-    
+
     <AuthenticatedLayout>
         <template #menu>
             <Menu class="flex" />

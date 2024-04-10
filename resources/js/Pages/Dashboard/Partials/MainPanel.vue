@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import Separator from "../../../Components/ui/separator/Separator.vue";
 import ProjectListAction from "./ProjectListAction.vue";
 
 import type {
