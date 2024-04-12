@@ -7,7 +7,7 @@ import {
     MenubarSeparator,
     MenubarShortcut,
     MenubarTrigger,
-} from "@/Components/ui/menubar";
+} from "@/components/ui/menubar";
 import { ChevronRight } from "lucide-vue-next";
 </script>
 

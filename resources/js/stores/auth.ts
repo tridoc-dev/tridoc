@@ -6,7 +6,7 @@ type User = {
     name: string
 }
 
-export const useCounterStore = defineStore('auth', {
+export const useAuthStore = defineStore('auth', {
     state: () => ({
         loggedIn: false,
         user: null as User | null,
@@ -16,10 +16,15 @@ export const useCounterStore = defineStore('auth', {
     },
     actions: {
         async init() {
-            const session = await api.get('/auth/session')
-            if (session.status === 200) {
+            await api({ url: '/sanctum/csrf-cookie', baseURL: '/' });
+
+            try {
+                const session = await api.get('/session')
+
                 this.loggedIn = true
-                this.user = session.data
+                this.user = session.data.data
+            } catch (e: any) {
+                //
             }
         }
     },

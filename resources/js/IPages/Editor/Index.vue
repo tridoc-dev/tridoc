@@ -7,7 +7,7 @@ import Menu from "@/IPages/Editor/Partials/Menu.vue";
 import EditorPanel from "@/IPages/Editor/Partials/EditorPanel.vue";
 import PreviewPanel from "@/IPages/Editor/Partials/PreviewPanel.vue";
 import FilePanel from "@/IPages/Editor/Partials/FilePanel.vue";
-import { Button } from "@/Components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Archive, Settings, CircleHelp } from "lucide-vue-next";
 import { ref } from "vue";
 import SettingsPanel from "@/IPages/Editor/Partials/SettingsPanel.vue";

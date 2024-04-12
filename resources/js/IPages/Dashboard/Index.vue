@@ -3,8 +3,8 @@ import Menu from "@/IPages/Dashboard/Partials/Menu.vue";
 import MainPanel from "@/IPages/Dashboard/Partials/MainPanel.vue";
 import {ref} from "vue";
 import {Settings, CircleHelp} from "lucide-vue-next";
-import {Button} from "@/Components/ui/button";
-import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
+import {Button} from "@/components/ui/button";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
 

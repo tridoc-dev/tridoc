@@ -8,32 +8,32 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class AuthController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function login(LoginRequest $request): RedirectResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         // see LoginRequest.php for the authenticate method
-        $request->authenticate();
-
-        // regenerate the session ID
-        $request->session()->regenerate();
-
-        // redirect to the intended URL or the dashboard
-        return redirect()->intended(route('dashboard', absolute: false));
+        if ($request->authenticate()) {
+            $request->session()->regenerate();
+            return response()->ok($request->user());
+        } else {
+            return response()->error(trans('auth.failed'), 401);
+        }
     }
 
     public function logout(Request $request): RedirectResponse

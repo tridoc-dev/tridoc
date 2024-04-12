@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { Project } from "./MainPanel.vue";
-import {Button} from "@/Components/ui/button";
+import {Button} from "@/components/ui/button";
 defineProps<{
     project: Project;
 }>();

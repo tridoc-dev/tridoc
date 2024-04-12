@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Separator from "../../../Components/ui/separator/Separator.vue";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
-import { Switch } from '@/Components/ui/switch'
+import Separator from "@/components/ui/separator/Separator.vue";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from '@/components/ui/switch'
 
 const enableVimMode = defineModel<boolean>('enableVimMode')
 const fontFamily = defineModel<string>('fontFamily')

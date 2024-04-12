@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const instance = axios.create();
+const instance = axios.create({
+    baseURL: '/api',
+});
 
 instance.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 instance.defaults.withCredentials = true;

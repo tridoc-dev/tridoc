@@ -13,8 +13,39 @@
 
         <!-- Scripts -->
         @vite(['resources/js/app.ts'])
+
+        <style>
+            .loading-screen {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+
+            .spinner {
+                border: 4px solid #f3f3f3;
+                border-top: 4px solid #3498db;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 2s linear infinite;
+                margin-bottom: 8px;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div id="app"></div>
+        <div id="app">
+            <div class="loading-screen">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+        </div>
     </body>
 </html>

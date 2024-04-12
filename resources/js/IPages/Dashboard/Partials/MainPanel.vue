@@ -18,9 +18,9 @@ import {
 } from "@tanstack/vue-table";
 
 import { h, ref, withModifiers } from "vue";
-import { Button } from "@/Components/ui/button";
-import { Input } from "@/Components/ui/input";
-import Badge from "../../../Components/ui/badge/Badge.vue";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Badge from "@/components/ui/badge/Badge.vue";
 
 import {
     Table,
@@ -29,7 +29,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/Components/ui/table";
+} from "@/components/ui/table";
 import { valueUpdater } from "@/lib/utils";
 
 export interface Project {

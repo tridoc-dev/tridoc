@@ -15,7 +15,7 @@ import {
     ContextMenuSubContent,
     ContextMenuSubTrigger,
     ContextMenuTrigger,
-} from "@/Components/ui/context-menu";
+} from "@/components/ui/context-menu";
 
 const props = defineProps<{
     params: FileTreeItem;

@@ -5,13 +5,13 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@/Components/ui/collapsible";
+} from "@/components/ui/collapsible";
 import {
     ContextMenu,
     ContextMenuContent,
     ContextMenuItem,
     ContextMenuTrigger,
-} from "@/Components/ui/context-menu";
+} from "@/components/ui/context-menu";
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import { FileTreeItem } from "./model";

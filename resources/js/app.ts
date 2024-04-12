@@ -26,13 +26,7 @@ import { createPinia } from 'pinia'
 //     },
 // });
 
-const app = createApp(App, {
-    setup() {
-        return {
-            // auth: useCounterStore(),
-        }
-    }
-})
+const app = createApp(App)
 
 const router = createRouter({
     history: createWebHistory()
@@ -42,4 +36,10 @@ const pinia = createPinia()
 
 app.use(router)
 app.use(pinia)
-app.mount('#app')
+
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+authStore.init().finally(() => {
+    app.mount('#app')
+})
