@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Separator from "../ui/separator/Separator.vue";
-import FileTree from "../FileTree/FileTree.vue";
+import FileTree from "../file-tree/FileTree.vue";
 import { ToggleGroupItem, ToggleGroupRoot } from "radix-vue";
 import { Icon } from "@iconify/vue";
 
-import { FileTreeItem } from "@/components/FileTree";
+import { FileTreeItem } from "@/components/file-tree";
 
 const items: FileTreeItem[] = [
     {

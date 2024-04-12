@@ -3,13 +3,13 @@ import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 
 import Menu from "@/components/Menu.vue";
-import EditorPanel from "@/components/editor/EditorPanel.vue";
-import PreviewPanel from "@/components/editor/PreviewPanel.vue";
-import FilePanel from "@/components/editor/FilePanel.vue";
+import EditorPanel from "@/components/editor/EditorPanelEdit.vue";
+import PreviewPanel from "@/components/editor/EditorPanelPreview.vue";
+import FilePanel from "@/components/editor/EditorPanelFile.vue";
 import { Button } from "@/components/ui/button";
 import { Archive, Settings, CircleHelp } from "lucide-vue-next";
 import { ref } from "vue";
-import SettingsPanel from "@/components/editor/SettingsPanel.vue";
+import SettingsPanel from "@/components/editor/EditorPanelSetting.vue";
 import AuthenticatedLayout from "@/layouts/AuthenticatedLayout.vue";
 import {
     MenubarContent,

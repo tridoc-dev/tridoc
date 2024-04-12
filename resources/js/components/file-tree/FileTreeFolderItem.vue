@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import FolderItem from "./FolderItem.vue";
-import FileItem from "./FileItem.vue";
+import FolderItem from "./FileTreeFolderItem.vue";
+import FileItem from "./FileTreeFileItem.vue";
 import {
     Collapsible,
     CollapsibleContent,

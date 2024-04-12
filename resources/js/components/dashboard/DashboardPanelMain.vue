@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import ProjectListAction from "./ProjectListAction.vue";
+import ProjectListAction from "./DashboardProjectListAction.vue";
 
 import { useAuthStore } from "@/stores/auth";
 
