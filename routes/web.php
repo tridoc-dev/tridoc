@@ -7,21 +7,21 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+//Route::get('/', function () {
+//    return Inertia::render('Welcome', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register'),
+//        'laravelVersion' => Application::VERSION,
+//        'phpVersion' => PHP_VERSION,
+//    ]);
+//});
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/Index');
+//    return Inertia::render('Dashboard/Index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::inertia('/editor', 'Editor/Index')->name('editor');
+//    Route::inertia('/editor', 'Editor/Index')->name('editor');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -33,16 +33,16 @@ Route::middleware('auth')->group(function () {
 // see Illuminate\Auth\Middleware\RedirectIfAuthenticated
 Route::middleware('guest')->group(function () {
     Route::get('register', function () {
-        return Inertia::render('Auth/Register');
+//        return Inertia::render('Auth/Register');
     })->name('register');
 
     Route::post('register', [AuthController::class, 'register']);
 
     Route::get('login', function () {
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
+//        return Inertia::render('Auth/Login', [
+//            'canResetPassword' => Route::has('password.request'),
+//            'status' => session('status'),
+//        ]);
     })->name('login');
 
     Route::post('login', [AuthController::class, 'login']);
@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
 
     // seems useless
     Route::get('confirm-password', function () {
-        return Inertia::render('Auth/ConfirmPassword');
+//        return Inertia::render('Auth/ConfirmPassword');
     })->name('password.confirm');
 
     Route::post('confirm-password', [AuthController::class, 'confirmPassword']);
@@ -86,4 +86,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout'])
         ->name('logout');
+});
+
+Route::fallback(function () {
+    return view('app');
 });

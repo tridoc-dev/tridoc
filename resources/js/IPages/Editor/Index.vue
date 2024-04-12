@@ -3,14 +3,14 @@
 import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 
-import Menu from "@/Pages/Editor/Partials/Menu.vue";
-import EditorPanel from "@/Pages/Editor/Partials/EditorPanel.vue";
-import PreviewPanel from "@/Pages/Editor/Partials/PreviewPanel.vue";
-import FilePanel from "@/Pages/Editor/Partials/FilePanel.vue";
+import Menu from "@/IPages/Editor/Partials/Menu.vue";
+import EditorPanel from "@/IPages/Editor/Partials/EditorPanel.vue";
+import PreviewPanel from "@/IPages/Editor/Partials/PreviewPanel.vue";
+import FilePanel from "@/IPages/Editor/Partials/FilePanel.vue";
 import { Button } from "@/Components/ui/button";
 import { Archive, Settings, CircleHelp } from "lucide-vue-next";
 import { ref } from "vue";
-import SettingsPanel from "@/Pages/Editor/Partials/SettingsPanel.vue";
+import SettingsPanel from "@/IPages/Editor/Partials/SettingsPanel.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 // const mode = useColorMode();

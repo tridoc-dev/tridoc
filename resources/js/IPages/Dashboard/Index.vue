@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Menu from "@/Pages/Dashboard/Partials/Menu.vue";
-import MainPanel from "@/Pages/Dashboard/Partials/MainPanel.vue";
+import Menu from "@/IPages/Dashboard/Partials/Menu.vue";
+import MainPanel from "@/IPages/Dashboard/Partials/MainPanel.vue";
 import {ref} from "vue";
 import {Settings, CircleHelp} from "lucide-vue-next";
 import {Button} from "@/Components/ui/button";
