@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import Sidebar from "@/components/Sidebar.vue";
+
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
+const { loggedIn } = useAuthStore();
+
+const router = useRouter();
+
+if (!loggedIn) {
+    router.push('/auth/login');
+}
 </script>
 
 <template>

@@ -20,7 +20,7 @@ const classes = computed(() =>
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
+    <RouterLink :to="href" :class="classes">
         <slot />
-    </Link>
+    </RouterLink>
 </template>

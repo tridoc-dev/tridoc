@@ -4,6 +4,7 @@ import api from "@/api"
 type User = {
     id: number
     name: string
+    email: string
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -26,6 +27,11 @@ export const useAuthStore = defineStore('auth', {
             } catch (e: any) {
                 //
             }
+        },
+
+        login(user: User) {
+            this.loggedIn = true
+            this.user = user
         }
     },
 })

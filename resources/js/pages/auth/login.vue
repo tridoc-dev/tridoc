@@ -1,6 +1,6 @@
 <script setup>
 import Checkbox from '@/components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
 import InputError from '@/components/InputError.vue';
 import InputLabel from '@/components/InputLabel.vue';
 import PrimaryButton from '@/components/PrimaryButton.vue';
@@ -23,14 +23,12 @@ const processing = ref(false);
 const errorMsg = ref(null);
 
 const submit = () => {
-    console.log(form.value)
     processing.value = true;
 
     api.post('/auth/login', form.value)
         .then(response => {
-            authStore.init().finally(() => {
-                router.push('/dashboard');
-            });
+            authStore.login(response.data.data);
+            router.push('/dashboard');
         })
         .catch(error => {
             errorMsg.value = error.response.data.message;

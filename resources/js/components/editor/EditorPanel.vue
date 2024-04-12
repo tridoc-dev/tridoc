@@ -3,7 +3,6 @@ import { ToggleGroupItem, ToggleGroupRoot } from "radix-vue";
 import { Loader2 } from 'lucide-vue-next'
 import { Icon } from "@iconify/vue";
 import CodeMirrorEditor from "./CodeMirrorEditor.vue";
-import { ref } from "vue";
 
 const toggleGroupItemClasses =
     "hover:bg-secondary text-primary flex h-[35px] w-[35px] items-center justify-center bg-card text-base leading-4 first:rounded-l last:rounded-r focus:z-10 focus:outline-none border";

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,7 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Response::macro('ok', function (mixed $value) {
+        ResetPassword::createUrlUsing(function (User $user, string $token) {
+            return config('app.url') . '/auth/reset/' . $token . '?email=' . urlencode($user->email);
+        });
+
+        Response::macro('ok', function (mixed $value = null) {
             return Response::json([
                 'data' => $value,
             ]);

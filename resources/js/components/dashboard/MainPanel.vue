@@ -2,6 +2,10 @@
 import { Icon } from "@iconify/vue";
 import ProjectListAction from "./ProjectListAction.vue";
 
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
+
 import type {
     ColumnDef,
     ColumnFiltersState,
@@ -20,7 +24,7 @@ import {
 import { h, ref, withModifiers } from "vue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Badge from "@/components/ui/badge/Badge.vue";
+import Badge from "../ui/badge/Badge.vue";
 
 import {
     Table,
@@ -204,9 +208,12 @@ const table = useVueTable({
         class=" flex flex-grow flex-col rounded-md border overflow-y-auto"
     >
         <div class="flex flex-col p-10">
-            <div class="flex flex-col items-start">
+            <div class="flex flex-col items-start mb-6">
                 <div class="text-2xl font-bold">Dashboard</div>
-                <div class="text-md mb-6">Welcome, Test User !</div>
+                <div class="text-md">Welcome, {{ authStore.user?.name }}</div>
+                <RouterLink to="/editor">
+                    <Button variant="outline">Go to Editor</Button>
+                </RouterLink>
             </div>
             <div class="flex flex-row items-center">
                 <div class="text-xl font-semibold">Create Project</div>

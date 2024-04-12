@@ -1,41 +1,52 @@
-<script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/components/InputError.vue';
-import InputLabel from '@/components/InputLabel.vue';
-import PrimaryButton from '@/components/PrimaryButton.vue';
-import TextInput from '@/components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+<script setup lang="ts">
+import {useRoute, useRouter} from "vue-router";
+import { ref } from "vue";
+import InputError from "@/components/InputError.vue";
+import PrimaryButton from "@/components/PrimaryButton.vue";
+import InputLabel from "@/components/InputLabel.vue";
+import TextInput from "@/components/TextInput.vue";
+import GuestLayout from "@/layouts/GuestLayout.vue";
+import api from "@/api";
+import {useAuthStore} from "@/stores/auth";
 
-const props = defineProps({
-    email: {
-        type: String,
-        required: true,
-    },
-    token: {
-        type: String,
-        required: true,
-    },
-});
+const route = useRoute();
 
-const form = useForm({
-    token: props.token,
-    email: props.email,
+const form = ref({
+    token: route.params.token,
+    email: route.query.email,
     password: '',
     password_confirmation: '',
 });
 
+const router = useRouter();
+const authStore = useAuthStore();
+
+const processing = ref(false);
+const errorMsg = ref(undefined);
+
 const submit = () => {
-    form.post(route('password.store'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+    processing.value = true;
+
+    api.post('/auth/reset', form.value)
+        .then(response => {
+            router.push('/auth/login');
+        })
+        .catch(error => {
+            errorMsg.value = error.response.data.message;
+        })
+        .finally(() => {
+            processing.value = false;
+        })
 };
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Reset Password" />
-
         <form @submit.prevent="submit">
+            <div class="mb-4 text-sm text-gray-600">
+                Reset your password.
+            </div>
+
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -47,9 +58,8 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="username"
+                    disabled="true"
                 />
-
-                <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
@@ -63,8 +73,6 @@ const submit = () => {
                     required
                     autocomplete="new-password"
                 />
-
-                <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
             <div class="mt-4">
@@ -79,11 +87,11 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                <InputError class="mt-2" :message="errorMsg" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton :class="{ 'opacity-25': processing }" :disabled="processing">
                     Reset Password
                 </PrimaryButton>
             </div>

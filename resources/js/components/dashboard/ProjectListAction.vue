@@ -1,4 +1,3 @@
-// DataTableDropDown.vue
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { Project } from "./MainPanel.vue";

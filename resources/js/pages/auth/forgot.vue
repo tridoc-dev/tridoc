@@ -1,30 +1,38 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
 import InputError from '@/components/InputError.vue';
 import InputLabel from '@/components/InputLabel.vue';
 import PrimaryButton from '@/components/PrimaryButton.vue';
 import TextInput from '@/components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from "vue";
+import api from "@/api";
 
-defineProps({
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
+const form = ref({
     email: '',
 });
 
+const processing = ref(false);
+const status = ref(null);
+const errorMsg = ref(null);
+
 const submit = () => {
-    form.post(route('password.email'));
+    processing.value = true;
+
+    api.post('/auth/forgot', form.value)
+        .then(response => {
+            status.value = response.data.data;
+        })
+        .catch(error => {
+            errorMsg.value = error.response.data.message;
+        })
+        .finally(() => {
+            processing.value = false;
+        })
 };
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Forgot Password" />
-
         <div class="mb-4 text-sm text-gray-600">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset
             link that will allow you to choose a new one.
@@ -48,11 +56,11 @@ const submit = () => {
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="errorMsg" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton :class="{ 'opacity-25': processing }" :disabled="processing">
                     Email Password Reset Link
                 </PrimaryButton>
             </div>

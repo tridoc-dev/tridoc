@@ -10,4 +10,10 @@ Route::get('session', function (Request $request) {
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::post('register', [AuthController::class, 'register']);
+
+    Route::post('forgot', [AuthController::class, 'forgotPassword']);
+    Route::post('reset', [AuthController::class, 'resetPassword']);
 });
