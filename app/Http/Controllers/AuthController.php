@@ -6,37 +6,31 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class AuthController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function login(LoginRequest $request): RedirectResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         // see LoginRequest.php for the authenticate method
-        $request->authenticate();
-
-        // regenerate the session ID
-        $request->session()->regenerate();
-
-        // redirect to the intended URL or the dashboard
-        return redirect()->intended(route('dashboard', absolute: false));
+        if ($request->authenticate()) {
+            $request->session()->regenerate();
+            return response()->ok($request->user());
+        } else {
+            return response()->error(trans('auth.failed'), 401);
+        }
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request): JsonResponse
     {
         // see config/auth.php for information about guard
         Auth::guard('web')->logout();
@@ -45,7 +39,7 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return response()->ok();
     }
 
     /**
@@ -53,7 +47,7 @@ class AuthController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function register(Request $request): RedirectResponse
+    public function register(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -71,13 +65,13 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return response()->ok($user);
     }
 
     /**
      * Send the password reset link to the user
      */
-    public function resetLink(Request $request): RedirectResponse
+    public function forgotPassword(Request $request): JsonResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -93,23 +87,10 @@ class AuthController extends Controller
         if ($status == Password::RESET_LINK_SENT) {
             // note that we should not use the `status` session anymore
             // it was used with Blade
-            return back()->with('status', __($status));
+            return response()->ok("We have emailed your password reset link!");
         }
 
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
-    }
-
-    /**
-     * Display the password reset view.
-     */
-    public function resetView(Request $request): Response
-    {
-        return Inertia::render('Auth/ResetPassword', [
-            'email' => $request->email,
-            'token' => $request->route('token'),
-        ]);
+        return response()->error("We can't find a user with that email address.");
     }
 
     /**
@@ -117,7 +98,7 @@ class AuthController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function resetPassword(Request $request): RedirectResponse
+    public function resetPassword(Request $request): JsonResponse
     {
         $request->validate([
             'token' => 'required',
@@ -144,87 +125,9 @@ class AuthController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', __($status));
+            return response()->ok();
         }
 
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
-    }
-
-    /**
-     * Display the email verification prompt.
-     */
-    public function verifyEmailPrompt(Request $request): RedirectResponse|Response
-    {
-        return $request->user()->hasVerifiedEmail()
-            ? redirect()->intended(route('dashboard', absolute: false))
-            : Inertia::render('Auth/VerifyEmail', ['status' => session('status')]);
-    }
-
-    /**
-     * Mark the authenticated user's email address as verified.
-     */
-    public function verifyEmail(EmailVerificationRequest $request): RedirectResponse
-    {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
-        }
-
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
-
-        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
-    }
-
-    /**
-     * Send a new email verification notification.
-     */
-    public function sendEmailVerification(Request $request): RedirectResponse
-    {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(route('dashboard', absolute: false));
-        }
-
-        $request->user()->sendEmailVerificationNotification();
-
-        return back()->with('status', 'verification-link-sent');
-    }
-
-    /**
-     * Update the user's password.
-     */
-    public function updatePassword(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', \Illuminate\Validation\Rules\Password::defaults(), 'confirmed'],
-        ]);
-
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        return back();
-    }
-
-    /**
-     * Confirm the user's password.
-     */
-    public function confirmPassword(Request $request): RedirectResponse
-    {
-        if (! Auth::guard('web')->validate([
-            'email' => $request->user()->email,
-            'password' => $request->password,
-        ])) {
-            throw ValidationException::withMessages([
-                'password' => __('auth.password'),
-            ]);
-        }
-
-        $request->session()->put('auth.password_confirmed_at', time());
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        return response()->error("Unable to reset password.");
     }
 }
