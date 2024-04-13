@@ -10,10 +10,13 @@ export const useEditorStore = defineStore("editor", () => {
   const settingEditorFontFamily = ref("");
   const settingEditorFontSize = ref("");
 
+  const currentOpenFile = ref("");
+
   return {
     settingEnableVimMode,
     settingSwitchVimMode,
     settingEditorFontFamily,
     settingEditorFontSize,
+    currentOpenFile,
   };
 });

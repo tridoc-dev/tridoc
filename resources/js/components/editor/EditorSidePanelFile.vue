@@ -6,26 +6,39 @@ import { Icon } from "@iconify/vue";
 
 import { FileTreeItem } from "@/components/file-tree";
 
+import { useEditorStore } from "./EditorStore";
+import { storeToRefs } from "pinia";
+const store = useEditorStore();
+const { currentOpenFile } = storeToRefs(store);
+
 const items: FileTreeItem[] = [
   {
     isFolder: false,
     name: "testfile",
+    path: "/testfile",
   },
   {
     isFolder: true,
     name: "test1",
+    path: "/test1",
     content: [
       {
         isFolder: true,
         name: "test3",
-        content: [{ isFolder: false, name: "test4" }],
+        path: "/test1/test3",
+        content: [
+          { isFolder: false, name: "test4", path: "/test1/test3/test4" },
+        ],
       },
       {
         isFolder: true,
-        name: "test3",
-        content: [{ isFolder: false, name: "test4" }],
+        name: "test2",
+        path: "/test1/test2",
+        content: [
+          { isFolder: false, name: "test4", path: "/test1/test2/test4" },
+        ],
       },
-      { isFolder: false, name: "test2" },
+      { isFolder: false, name: "test2", path: "/test1/test2" },
     ],
   },
 ];
@@ -48,7 +61,7 @@ const items: FileTreeItem[] = [
       </ToggleGroup>
     </template>
     <template #content>
-      <FileTree :params="items" />
+      <FileTree :params="items" v-model="currentOpenFile" />
     </template>
   </EditorSidePanel>
 </template>

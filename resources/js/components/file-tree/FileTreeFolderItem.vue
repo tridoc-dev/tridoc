@@ -20,7 +20,7 @@ const props = defineProps<{
   params: FileTreeItem;
   indentSize: number;
 }>();
-
+const chosenFile = defineModel<string>();
 const isOpen = ref(false);
 </script>
 
@@ -29,19 +29,19 @@ const isOpen = ref(false);
     <ContextMenu>
       <ContextMenuTrigger>
         <CollapsibleTrigger
-          class="flex flex-row w-full p-2 pl-4 text-sm items-center hover:bg-muted/50"
+          class="flex flex-row w-full h-9 p-[8px] pl-4 text-sm items-center hover:bg-muted/50"
         >
           <div v-for="i in props.indentSize">
             <div class="w-5"></div>
           </div>
           <Icon
             v-if="isOpen"
-            icon="lucide:folder-open"
+            icon="vscode-icons:default-folder-opened"
             class="w-4 h-4 mr-2 flex-shrink-0"
           />
           <Icon
             v-else
-            icon="lucide:folder"
+            icon="vscode-icons:default-folder"
             class="w-4 h-4 mr-2 flex-shrink-0"
           />
           <div class="truncate">
@@ -69,12 +69,14 @@ const isOpen = ref(false);
         <div v-if="item.isFolder">
           <FolderItem
             :params="item"
+            v-model="chosenFile"
             :indent-size="props.indentSize + 1"
           ></FolderItem>
         </div>
         <div v-else>
           <FileItem
             :params="item"
+            v-model="chosenFile"
             :indent-size="props.indentSize + 1"
           ></FileItem>
         </div>
