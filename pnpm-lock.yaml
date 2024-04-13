@@ -72,8 +72,8 @@ devDependencies:
     specifier: 8.4.0-rc2
     version: 8.4.0-rc2
   radix-vue:
-    specifier: ^1.7.0
-    version: 1.7.0(vue@3.4.21)
+    specifier: ^1.6.2
+    version: 1.6.2(vue@3.4.21)
   splitpanes:
     specifier: ^3.1.5
     version: 3.1.5
@@ -739,10 +739,6 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /@tanstack/virtual-core@3.2.1:
-    resolution: {integrity: sha512-nO0d4vRzsmpBQCJYyClNHPPoUMI4nXNfrm6IcCRL33ncWMoNVpURh9YebEHPw8KrtsP2VSJIHE4gf4XFGk1OGg==}
-    dev: true
-
   /@tanstack/vue-table@8.15.3(vue@3.4.21):
     resolution: {integrity: sha512-QkPS/MIUmPLAGDZw1KQA3xdJ+rwAcyftemvMQicvyJIahSPtPDy+umsWvXUSd0fOANmq+dVoLsKp5CjUJQa9Vg==}
     engines: {node: '>=12'}
@@ -750,15 +746,6 @@ packages:
       vue: '>=3.2'
     dependencies:
       '@tanstack/table-core': 8.15.3
-      vue: 3.4.21(typescript@5.4.5)
-    dev: true
-
-  /@tanstack/vue-virtual@3.2.1(vue@3.4.21):
-    resolution: {integrity: sha512-NWJL8zJ4kwCkUzWd2jLKN9NTxj9RjYyaJwtA16j9urfbnMIdKe2g2HNymq0jGj+fmX/9nd58d6h78LrZ7I/J+A==}
-    peerDependencies:
-      vue: ^2.7.0 || ^3.0.0
-    dependencies:
-      '@tanstack/virtual-core': 3.2.1
       vue: 3.4.21(typescript@5.4.5)
     dev: true
 
@@ -1927,15 +1914,14 @@ packages:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
 
-  /radix-vue@1.7.0(vue@3.4.21):
-    resolution: {integrity: sha512-lyAllebKbEGECEIKdC74gjOxgCtHjGKbINH/RUOP6p0Qk2HOsV06WGONStDl+c3FZKzoiH0rhPSI85Y6gKhMnw==}
+  /radix-vue@1.6.2(vue@3.4.21):
+    resolution: {integrity: sha512-uHyj8YaA+O2ZF1Ouxl2EJUzXXEFLzN/CtOE1HVFG3h60aFD7E9HNZ5RxODnXSD7j0vZLFS/dHU9Z2+Yjljj2Lg==}
     peerDependencies:
       vue: '>= 3.2.0'
     dependencies:
       '@floating-ui/dom': 1.6.3
       '@floating-ui/vue': 1.0.6(vue@3.4.21)
       '@internationalized/date': 3.5.2
-      '@tanstack/vue-virtual': 3.2.1(vue@3.4.21)
       '@vueuse/core': 10.9.0(vue@3.4.21)
       '@vueuse/shared': 10.9.0(vue@3.4.21)
       aria-hidden: 1.2.4
