@@ -5,10 +5,6 @@ import { Icon } from "@iconify/vue";
 import CodeMirrorEditor from "./EditorCMEditor.vue";
 
 const state: string = "good";
-
-// v-model pass to codemirror
-const enableVimMode = defineModel("enableVimMode");
-const fontSize = defineModel("fontSize");
 </script>
 
 <template>
@@ -16,7 +12,7 @@ const fontSize = defineModel("fontSize");
     <div class="flex flex-row">
       <div class="w-fit">
         <ToggleGroup type="multiple">
-          <ToggleGroupItem value="left" @click="console.log(enableVimMode)">
+          <ToggleGroupItem value="left">
             <Icon icon="lucide:undo" class="w-4 h-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="center">

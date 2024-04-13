@@ -7,11 +7,11 @@ import "splitpanes/dist/splitpanes.css";
 import Menu from "@/components/Menu.vue";
 import EditorPanel from "@/components/editor/EditorPanelEdit.vue";
 import PreviewPanel from "@/components/editor/EditorPanelPreview.vue";
-import FilePanel from "@/components/editor/EditorPanelFile.vue";
+import FilePanel from "@/components/editor/EditorSidePanelFile.vue";
 import { Button } from "@/components/ui/button";
 import { Archive, Settings, CircleHelp } from "lucide-vue-next";
 import { ref } from "vue";
-import SettingsPanel from "@/components/editor/EditorPanelSetting.vue";
+import SettingsPanel from "@/components/editor/EditorSidePanelSetting.vue";
 import AuthenticatedLayout from "@/layouts/AuthenticatedLayout.vue";
 import {
   MenubarContent,
@@ -21,17 +21,10 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { useEditorStore } from "@/components/editor/EditorStore";
 
 // const mode = useColorMode();
 const openFilePanel = ref(false);
 const openSettingsPanel = ref(false);
-
-const enableVimMode = ref(false);
-const editorFontFamily = ref("");
-const editorFontSize = ref("13");
-
-const store = useEditorStore();
 </script>
 
 <template>
@@ -130,19 +123,10 @@ const store = useEditorStore();
             <FilePanel class="bg-background" />
           </pane>
           <pane v-if="openSettingsPanel">
-            <SettingsPanel
-              class="bg-background"
-              v-model:enable-vim-mode="enableVimMode"
-              v-model:font-family="editorFontFamily"
-              v-model:font-size="editorFontSize"
-            />
+            <SettingsPanel class="bg-background" />
           </pane>
           <pane class="mr-[1px]">
-            <EditorPanel
-              v-model:enable-vim-mode="enableVimMode"
-              v-model:font-family="editorFontFamily"
-              v-model:font-size="editorFontSize"
-            />
+            <EditorPanel />
           </pane>
           <pane class="mr-2">
             <PreviewPanel />
