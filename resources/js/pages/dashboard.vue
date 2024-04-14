@@ -17,20 +17,20 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 
-LaravelEcho.instance.channel("heartbeat").listen(".heartbeat", (e: any) => {
-  console.log(e);
-});
-
-const interval = setInterval(() => {
-  LaravelEcho.pusher.send_event("ClientPing", {
-    message: "I'm alive",
-  });
-}, 5000);
-
-onUnmounted(() => {
-  LaravelEcho.instance.leave("heartbeat");
-  clearInterval(interval);
-});
+// LaravelEcho.instance.channel("heartbeat").listen(".heartbeat", (e: any) => {
+//   console.log(e);
+// });
+//
+// const interval = setInterval(() => {
+//   LaravelEcho.pusher.send_event("ClientPing", {
+//     message: "I'm alive",
+//   });
+// }, 5000);
+//
+// onUnmounted(() => {
+//   LaravelEcho.instance.leave("heartbeat");
+//   clearInterval(interval);
+// });
 </script>
 
 <template>
