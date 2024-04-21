@@ -12,11 +12,14 @@ export const useEditorStore = defineStore("editor", () => {
 
   const currentOpenFile = ref("");
 
+  const previewPdfScale = ref(1);
+
   return {
     settingEnableVimMode,
     settingSwitchVimMode,
     settingEditorFontFamily,
     settingEditorFontSize,
     currentOpenFile,
+    previewPdfScale
   };
 });

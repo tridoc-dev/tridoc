@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ToggleGroupItem, ToggleGroup } from "@/components/ui/toggle-group";
 import { Icon } from "@iconify/vue";
+
+import EditorPDFDisplay from "./EditorPDFDisplay.vue";
+
+import { useEditorStore } from "./EditorStore";
+
+const store = useEditorStore();
 </script>
 
 <template>
@@ -8,13 +14,13 @@ import { Icon } from "@iconify/vue";
     <div class="flex flex-row">
       <div class="w-fit">
         <ToggleGroup>
-          <ToggleGroupItem value="left">
+          <ToggleGroupItem value="left" @click="store.previewPdfScale=store.previewPdfScale-0.1">
             <Icon icon="lucide:minus" class="w-4 h-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="left" :class="'w-[60px]'">
-            <div class="text-sm">100%</div>
+            <div class="text-sm">{{ (store.previewPdfScale * 100).toFixed(0) }}%</div>
           </ToggleGroupItem>
-          <ToggleGroupItem value="center">
+          <ToggleGroupItem value="center" @click="store.previewPdfScale=store.previewPdfScale+0.1">
             <Icon icon="lucide:plus" class="w-4 h-4" />
           </ToggleGroupItem>
         </ToggleGroup>
@@ -29,12 +35,12 @@ import { Icon } from "@iconify/vue";
       </div>
     </div>
     <div
-      class="flex flex-grow w-full mt-2 drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)]"
+      class="flex flex-grow w-full mt-2 drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)] h-0"
     >
       <div
-        class="w-full h-full border bg-background rounded-t-md flex items-center justify-center"
+        class="w-full h-full border bg-background rounded-t-md flex overflow-scroll bg-gray-400"
       >
-        THIS IS FOR PREVIEW
+        <EditorPDFDisplay ></EditorPDFDisplay>
       </div>
     </div>
   </div>

@@ -36,6 +36,7 @@
         "typescript": "^5.4.5",
         "unplugin-vue-router": "^0.8.6",
         "vite": "^5.2.8",
+        "vite-plugin-top-level-await": "^1.4.1",
         "vue": "^3.4.21",
         "vue-codemirror": "^6.1.1",
         "vue-router": "^4.3.0",
@@ -43,5 +44,9 @@
         "y-websocket": "^2.0.2",
         "yjs": "^13.6.14"
     },
-    "packageManager": "pnpm@8.15.4+sha1.c85a4305534f76d461407b59277b954bac97b5c4"
+    "packageManager": "pnpm@8.15.4+sha1.c85a4305534f76d461407b59277b954bac97b5c4",
+    "dependencies": {
+        "@tato30/vue-pdf": "^1.9.6",
+        "pdfjs-dist": "^4.1.392"
+    }
 }
