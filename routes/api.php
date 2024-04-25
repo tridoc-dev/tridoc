@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EditorController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
 //        Route::get('{project}', [ProjectController::class, 'show']);
 //        Route::put('{project}', [ProjectController::class, 'update']);
 //        Route::delete('{project}', [ProjectController::class, 'destroy']);
+    });
+
+    Route::prefix('editor')->group(function () {
+        Route::post('update', [EditorController::class, 'update']);
     });
 });
