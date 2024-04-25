@@ -7,15 +7,17 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProjectFile extends FormRequest
 {
+    public Project $project;
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
         try {
-            $project = Project::findOrFail($this->project_id);
+            $this->project = Project::findOrFail($this->route('project'));
 
-            return $this->user()->can('update', $project);
+            return $this->user()->can('update', $this->project);
         } catch (\Throwable $th) {
             return false;
         }
@@ -29,7 +31,7 @@ class UpdateProjectFile extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => ['required', 'integer', 'exists:projects,id'],
+            //
         ];
     }
 }

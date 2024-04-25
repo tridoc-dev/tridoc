@@ -4,7 +4,7 @@ import { Icon } from "@iconify/vue";
 
 import EditorPDFDisplay from "./EditorPDFDisplay.vue";
 
-import { useEditorStore } from "./EditorStore";
+import { useEditorStore } from "../../stores/editor";
 
 const store = useEditorStore();
 </script>

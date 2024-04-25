@@ -6,7 +6,7 @@ import { Icon } from "@iconify/vue";
 
 import { FileTreeItem } from "@/components/file-tree";
 
-import { useEditorStore } from "./EditorStore";
+import { useEditorStore } from "../../stores/editor";
 import { storeToRefs } from "pinia";
 const store = useEditorStore();
 const { currentOpenFile } = storeToRefs(store);

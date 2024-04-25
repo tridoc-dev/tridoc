@@ -3,7 +3,7 @@ import EditorSidePanel from "./EditorSidePanel.vue";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useEditorStore } from "./EditorStore";
+import { useEditorStore } from "../../stores/editor";
 import { storeToRefs } from "pinia";
 
 const store = useEditorStore();

@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('editor')->group(function () {
-        Route::post('update', [EditorController::class, 'update']);
+        // Route::post('update', [EditorController::class, 'update']);
+
+        Route::post('update/{project}', [EditorController::class, 'update'])->whereNumber('project');
     });
 });

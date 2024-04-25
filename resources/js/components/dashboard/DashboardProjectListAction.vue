@@ -9,9 +9,11 @@ defineProps<{
 
 <template>
   <div class="flex space-x-4">
-    <Button variant="ghost">
-      <Icon icon="lucide:play" class="w-4 h-4" />
-    </Button>
+    <RouterLink :to="'/project/' + project.id">
+      <Button variant="ghost">
+        <Icon icon="lucide:play" class="w-4 h-4" />
+      </Button>
+    </RouterLink>
     <Button variant="ghost">
       <Icon icon="lucide:tag" class="w-4 h-4" />
     </Button>

@@ -11,13 +11,8 @@ import { ref, shallowRef, watchEffect } from "vue";
 import * as Y from "yjs";
 // import { WebsocketProvider } from "y-websocket";
 // import { yCollab } from "y-codemirror.next";
-import { useEditorStore } from "./EditorStore";
-
-function saveCallback(view: EditorView) {
-  console.log("save");
-  console.log(view.state.doc.toString());
-  return true;
-}
+import { useEditorStore } from "../../stores/editor";
+import { useRoute } from "vue-router";
 
 // const provider = new WebsocketProvider(
 //   'ws://localhost:8080',
@@ -34,6 +29,19 @@ const view = shallowRef();
 const handleReady = (payload: { view: any }) => {
   view.value = payload.view;
 };
+
+const route = useRoute();
+
+function saveCallback(view: EditorView) {
+  console.log("save");
+  // console.log(view.state.doc.toString());
+
+  store.sendDocumentContent(
+    view.state.doc.toString(),
+    route.params.id.toString()
+  );
+  return true;
+}
 
 Vim.defineEx("write", "w", function (_view: { cm6: any }) {
   saveCallback(_view.cm6);
