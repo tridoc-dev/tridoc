@@ -13,19 +13,24 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Icon } from "@iconify/vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { FileTreeItem } from "./model";
+import { useEditorStore } from "@/stores/editor";
+import { storeToRefs } from "pinia";
+
+const store = useEditorStore();
 
 const props = defineProps<{
   params: FileTreeItem;
   indentSize: number;
 }>();
 const chosenFile = defineModel<string>();
-const isOpen = ref(false);
+store.initFilePanelOpenState(props.params.path);
+const { filePanelOpenState } = storeToRefs(store);
 </script>
 
 <template>
-  <Collapsible v-model:open="isOpen">
+  <Collapsible v-model:open="filePanelOpenState[props.params.path]">
     <ContextMenu>
       <ContextMenuTrigger>
         <CollapsibleTrigger
@@ -35,16 +40,16 @@ const isOpen = ref(false);
             <div class="w-5"></div>
           </div>
           <Icon
-            v-if="isOpen"
-            icon="vscode-icons:default-folder-opened"
+            v-if="filePanelOpenState[props.params.path]"
+            icon="tdesign:folder-open-1"
             class="w-4 h-4 mr-2 flex-shrink-0"
           />
           <Icon
             v-else
-            icon="vscode-icons:default-folder"
+            icon="tdesign:folder"
             class="w-4 h-4 mr-2 flex-shrink-0"
           />
-          <div class="truncate">
+          <div class="text-[13px] truncate">
             {{ params.name }}
           </div>
         </CollapsibleTrigger>

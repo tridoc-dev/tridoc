@@ -14,13 +14,21 @@ const store = useEditorStore();
     <div class="flex flex-row">
       <div class="w-fit">
         <ToggleGroup>
-          <ToggleGroupItem value="left" @click="store.previewPdfScale=store.previewPdfScale-0.1">
+          <ToggleGroupItem
+            value="left"
+            @click="store.previewPdfScale = store.previewPdfScale - 0.1"
+          >
             <Icon icon="lucide:minus" class="w-4 h-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="left" :class="'w-[60px]'">
-            <div class="text-sm">{{ (store.previewPdfScale * 100).toFixed(0) }}%</div>
+            <div class="text-sm">
+              {{ (store.previewPdfScale * 100).toFixed(0) }}%
+            </div>
           </ToggleGroupItem>
-          <ToggleGroupItem value="center" @click="store.previewPdfScale=store.previewPdfScale+0.1">
+          <ToggleGroupItem
+            value="center"
+            @click="store.previewPdfScale = store.previewPdfScale + 0.1"
+          >
             <Icon icon="lucide:plus" class="w-4 h-4" />
           </ToggleGroupItem>
         </ToggleGroup>
@@ -38,9 +46,9 @@ const store = useEditorStore();
       class="flex flex-grow w-full mt-2 drop-shadow-[0_0px_5px_rgba(0,0,0,0.1)] h-0"
     >
       <div
-        class="w-full h-full border bg-background rounded-t-md flex overflow-scroll bg-gray-400"
+        class="w-full h-full border rounded-t-md flex overflow-scroll bg-[#e4e5ea]"
       >
-        <EditorPDFDisplay ></EditorPDFDisplay>
+        <EditorPDFDisplay v-model="store.previewPdfUrl"></EditorPDFDisplay>
       </div>
     </div>
   </div>

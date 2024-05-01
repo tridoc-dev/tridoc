@@ -1,16 +1,18 @@
 <script setup lang="ts">
-const props = defineProps<{
-  params: FileTreeItem[];
-}>();
 const chosenFile = defineModel<string>();
 
+import { useEditorStore } from "@/stores/editor";
 import FileItem from "./FileTreeFileItem.vue";
 import FolderItem from "./FileTreeFolderItem.vue";
 import { FileTreeItem } from "./model";
+import { storeToRefs } from "pinia";
+
+const store = useEditorStore();
+const { filePanelFileList } = storeToRefs(store);
 </script>
 
 <template>
-  <div v-for="item in props.params">
+  <div v-for="item in filePanelFileList">
     <FolderItem
       :params="item"
       :indent-size="0"

@@ -14,6 +14,8 @@ import * as Y from "yjs";
 import { useEditorStore } from "../../stores/editor";
 import { useRoute } from "vue-router";
 
+const code = defineModel<string>();
+
 // const provider = new WebsocketProvider(
 //   'ws://localhost:8080',
 //   'codemirror-demo',
@@ -23,7 +25,7 @@ const store = useEditorStore();
 const completions = completeFromList(texSnippets);
 const ydoc = new Y.Doc();
 const ytext = ydoc.getText("codemirror-demo");
-const code = ytext.toString();
+// const code = ytext.toString();
 const extensions = ref([] as any);
 const view = shallowRef();
 const handleReady = (payload: { view: any }) => {

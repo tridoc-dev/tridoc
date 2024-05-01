@@ -3,8 +3,20 @@ import { ToggleGroupItem, ToggleGroup } from "@/components/ui/toggle-group";
 import { Loader2 } from "lucide-vue-next";
 import { Icon } from "@iconify/vue";
 import CodeMirrorEditor from "./EditorCMEditor.vue";
+import { useEditorStore } from "@/stores/editor";
+import { ref, watchEffect } from "vue";
 
+const store = useEditorStore();
 const state: string = "good";
+
+const codeContent = ref();
+const realCodeContent = ref("");
+watchEffect(() => {
+  codeContent.value = store.getFileContent(
+    store.getFileContent(store.currentOpenFile)
+  );
+  realCodeContent.value = codeContent == null ? "" : codeContent.value;
+});
 </script>
 
 <template>
@@ -66,7 +78,7 @@ const state: string = "good";
         class="w-full h-full border bg-background rounded-t-md flex items-center justify-center overflow-hidden"
       >
         <div class="w-full h-full root-wrapper">
-          <CodeMirrorEditor />
+          <CodeMirrorEditor v-model="realCodeContent" />
         </div>
       </div>
     </div>

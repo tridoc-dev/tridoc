@@ -4,8 +4,9 @@ import { VuePDF, usePDF } from "@tato30/vue-pdf";
 import { useEditorStore } from "@/stores/editor";
 
 const store = useEditorStore();
+const pdfUrl = defineModel();
 
-const { pdf, pages } = usePDF("/test.pdf");
+const { pdf, pages } = usePDF(pdfUrl);
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const { pdf, pages } = usePDF("/test.pdf");
         :pdf="pdf"
         :page="page"
         :scale="store.previewPdfScale"
-        class="mb-10"
+        class="mb-10 shadow-xl"
       />
     </div>
   </div>

@@ -42,7 +42,7 @@ const baseBgStyle = "flex flex-row h-9 w-full pl-4 text-sm items-center pr-0.5";
 const normalBgStyle = baseBgStyle + " hover:bg-muted/50";
 const choosenBgStyle = baseBgStyle + " hover:bg-blue-600 bg-blue-500";
 
-const baseTextStyle = "truncate";
+const baseTextStyle = "text-[13px] truncate";
 const normalTextStyle = baseTextStyle;
 const choosenTextStyle = baseTextStyle + " text-white";
 </script>
@@ -56,10 +56,7 @@ const choosenTextStyle = baseTextStyle + " text-white";
       <div v-for="i in props.indentSize">
         <div class="w-5"></div>
       </div>
-      <Icon
-        icon="vscode-icons:file-type-light-tex"
-        class="w-5 h-5 mr-2 flex-shrink-0"
-      />
+      <Icon icon="tdesign:file" class="w-4 h-4 mr-2 flex-shrink-0" />
       <Input
         v-if="isRenaming"
         ref="renamingInput"
