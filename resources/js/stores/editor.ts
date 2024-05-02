@@ -113,6 +113,10 @@ export const useEditorStore = defineStore("editor", () => {
     return null;
   }
 
+  function filePanelHandleDeleteFile(path: string) {
+    console.log("delete file: ", path);
+  }
+
   return {
     settingEnableVimMode,
     settingSwitchVimMode,
@@ -128,5 +132,6 @@ export const useEditorStore = defineStore("editor", () => {
     initFilePanelOpenState,
     updateFilePanelFileList2,
     getFileContent,
+    filePanelHandleDeleteFile,
   };
 });

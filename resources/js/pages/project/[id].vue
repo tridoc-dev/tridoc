@@ -14,12 +14,12 @@ import { ref } from "vue";
 import SettingsPanel from "@/components/editor/EditorSidePanelSetting.vue";
 import AuthenticatedLayout from "@/layouts/AuthenticatedLayout.vue";
 import {
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
 } from "@/components/ui/menubar";
 
 // const mode = useColorMode();
@@ -28,127 +28,127 @@ const openSettingsPanel = ref(false);
 </script>
 
 <template>
-    <AuthenticatedLayout>
-        <template #menu>
-            <Menu class="flex">
-                <template #menubar>
-                    <MenubarMenu>
-                        <MenubarTrigger>File</MenubarTrigger>
-                        <MenubarContent>
-                            <MenubarItem>
-                                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-                            </MenubarItem>
-                            <MenubarItem>New Window</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Share</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Print</MenubarItem>
-                        </MenubarContent>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger>Edit</MenubarTrigger>
-                        <MenubarContent>
-                            <MenubarItem>
-                                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-                            </MenubarItem>
-                            <MenubarItem>New Window</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Share</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Print</MenubarItem>
-                        </MenubarContent>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger>View</MenubarTrigger>
-                        <MenubarContent>
-                            <MenubarItem>
-                                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-                            </MenubarItem>
-                            <MenubarItem>New Window</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Share</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Print</MenubarItem>
-                        </MenubarContent>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger>Help</MenubarTrigger>
-                        <MenubarContent>
-                            <MenubarItem>
-                                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
-                            </MenubarItem>
-                            <MenubarItem>New Window</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Share</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Print</MenubarItem>
-                        </MenubarContent>
-                    </MenubarMenu>
-                </template>
-
-                <template #location> Editor </template>
-            </Menu>
+  <AuthenticatedLayout>
+    <template #menu>
+      <Menu class="flex">
+        <template #menubar>
+          <MenubarMenu>
+            <MenubarTrigger>File</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>New Window</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Share</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Print</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Edit</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>New Window</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Share</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Print</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>View</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>New Window</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Share</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Print</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Help</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>New Window</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Share</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Print</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
         </template>
 
-        <template #sidebar>
-            <Button
-                variant="ghost"
-                class="w-[54px] h-[54px]"
-                @click="
+        <template #location> Editor </template>
+      </Menu>
+    </template>
+
+    <template #sidebar>
+      <Button
+        variant="ghost"
+        class="w-[54px] h-[54px]"
+        @click="
           openSettingsPanel = false;
           openFilePanel = !openFilePanel;
         "
-            >
-                <Archive />
-            </Button>
-            <Button
-                variant="ghost"
-                class="w-[54px] h-[54px]"
-                @click="
+      >
+        <Archive />
+      </Button>
+      <Button
+        variant="ghost"
+        class="w-[54px] h-[54px]"
+        @click="
           openFilePanel = false;
           openSettingsPanel = !openSettingsPanel;
         "
-            >
-                <Settings />
-            </Button>
-            <Button variant="ghost" class="w-[54px] h-[54px]">
-                <CircleHelp />
-            </Button>
-        </template>
+      >
+        <Settings />
+      </Button>
+      <Button variant="ghost" class="w-[54px] h-[54px]">
+        <CircleHelp />
+      </Button>
+    </template>
 
-        <template #main>
-            <div class="flex flex-grow">
-                <splitpanes class="default-theme">
-                    <pane v-if="openFilePanel">
-                        <FilePanel class="bg-background" />
-                    </pane>
-                    <pane v-if="openSettingsPanel">
-                        <SettingsPanel class="bg-background" />
-                    </pane>
-                    <pane class="mr-[1px]">
-                        <EditorPanel />
-                    </pane>
-                    <pane class="mr-2">
-                        <PreviewPanel />
-                    </pane>
-                </splitpanes>
-            </div>
-        </template>
-    </AuthenticatedLayout>
+    <template #main>
+      <div class="flex flex-grow">
+        <splitpanes class="default-theme">
+          <pane v-if="openFilePanel">
+            <FilePanel class="bg-background" />
+          </pane>
+          <pane v-if="openSettingsPanel">
+            <SettingsPanel class="bg-background" />
+          </pane>
+          <pane class="mr-[1px]">
+            <EditorPanel />
+          </pane>
+          <pane class="mr-2">
+            <PreviewPanel />
+          </pane>
+        </splitpanes>
+      </div>
+    </template>
+  </AuthenticatedLayout>
 </template>
 
 <style>
 .splitpanes .splitpanes__pane {
-    transition: none !important;
-    overflow: visible;
+  transition: none !important;
+  overflow: visible;
 }
 
 .splitpanes.default-theme .splitpanes__splitter {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .splitpanes.default-theme .splitpanes__splitter:after,
 .splitpanes.default-theme .splitpanes__splitter:before {
-    display: none;
+  display: none;
 }
 </style>
