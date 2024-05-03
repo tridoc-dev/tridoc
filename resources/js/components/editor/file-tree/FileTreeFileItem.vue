@@ -2,18 +2,22 @@
 import { FileTreeItem } from "./model";
 import { Icon } from "@iconify/vue";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { computed, ref } from "vue";
+import { Loader2 } from "lucide-vue-next";
+import { useEditorStore } from "@/stores/editor";
+
+const store = useEditorStore();
 
 const props = defineProps<{
   params: FileTreeItem;
@@ -41,6 +45,12 @@ const choosenTextStyle = baseTextStyle + " text-white";
 const baseIconStyle = "w-4 h-4 mr-2 flex-shrink-0";
 const normalIconStyle = baseIconStyle;
 const choosenIconStyle = baseIconStyle + " text-white";
+
+const renameDialogOpen = ref(false);
+const deleteDialogOpen = ref(false);
+const dialogLoading = ref(false);
+
+const renameDialogInput = ref(props.params.name);
 </script>
 
 <template>
@@ -61,56 +71,111 @@ const choosenIconStyle = baseIconStyle + " text-white";
       {{ props.params.name }}
     </div>
     <div class="flex flex-grow"></div>
-    <Dialog>
-      <DialogTrigger @click.stop="">
+    <AlertDialog v-model:open="renameDialogOpen">
+      <AlertDialogTrigger @click.stop="">
         <div v-if="isHover">
           <Icon
             icon="lucide:text-cursor-input"
             :class="isChoosen ? choosenIconStyle : normalIconStyle"
           />
         </div>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Rename {{ props.params.name }}</DialogTitle>
-          <DialogDescription> </DialogDescription>
-          <Input placeholder="New File Name" />
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose as-child>
-            <Button type="button" variant="secondary">Close</Button>
-          </DialogClose>
-          <Button type="button" variant="default">Rename</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-    <Dialog>
-      <DialogTrigger @click.stop="">
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Rename {{ props.params.name }}</AlertDialogTitle>
+          <AlertDialogDescription> </AlertDialogDescription>
+          <Input v-model="renameDialogInput" placeholder="New File Name" />
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel as-child>
+            <Button :disabled="dialogLoading" type="button" variant="secondary"
+              >Close</Button
+            >
+          </AlertDialogCancel>
+          <div v-if="dialogLoading == false">
+            <Button
+              @click="
+                () => {
+                  dialogLoading = true;
+                  store
+                    .filePanelHandleRenameFile(
+                      props.params.path,
+                      renameDialogInput
+                    )
+                    .then(() => {
+                      renameDialogOpen = false;
+                      dialogLoading = false;
+                    });
+                }
+              "
+              type="button"
+              variant="default"
+            >
+              Rename
+            </Button>
+          </div>
+          <div v-else>
+            <Button disabled variant="default">
+              <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+              Please wait
+            </Button>
+          </div>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    <AlertDialog v-model:open="deleteDialogOpen">
+      <AlertDialogTrigger @click.stop="">
         <div v-if="isHover">
           <Icon
             icon="lucide:trash-2"
             :class="isChoosen ? choosenIconStyle : normalIconStyle"
           />
         </div>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle
             >Are you absolutely sure to delete
-            {{ props.params.name }}?</DialogTitle
+            {{ props.params.name }}?</AlertDialogTitle
           >
-          <DialogDescription>
+          <AlertDialogDescription>
             This action cannot be undone. Are you sure you want to permanently
             delete {{ props.params.name }}?
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose as-child>
-            <Button type="button" variant="secondary">Close</Button>
-          </DialogClose>
-          <Button type="button" variant="destructive">Delete</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel as-child>
+            <Button :disabled="dialogLoading" type="button" variant="secondary"
+              >Close</Button
+            >
+          </AlertDialogCancel>
+          <div v-if="dialogLoading == false">
+            <Button
+              @click="
+                () => {
+                  dialogLoading = true;
+                  store
+                    .filePanelHandleDeleteFile(props.params.path)
+                    .then(() => {
+                      deleteDialogOpen = false;
+                      dialogLoading = false;
+                    });
+                }
+              "
+              type="button"
+              variant="destructive"
+            >
+              Delete
+            </Button>
+          </div>
+          <div v-else>
+            <Button disabled variant="destructive">
+              <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+              Please wait
+            </Button>
+          </div>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   </div>
 </template>

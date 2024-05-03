@@ -7,15 +7,15 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/vue";
@@ -34,6 +34,17 @@ const props = defineProps<{
 const chosenFile = defineModel<string>();
 store.initFilePanelOpenState(props.params.path);
 const { filePanelOpenState } = storeToRefs(store);
+
+const newFileDialogOpen = ref(false);
+const newFolderDialogOpen = ref(false);
+const uploadDialogOpen = ref(false);
+const renameDialogOpen = ref(false);
+const deleteDialogOpen = ref(false);
+const dialogLoading = ref(false);
+
+const newFileDialogInput = ref("");
+const newFolderDialogInput = ref("");
+const renameDialogInput = ref(props.params.name);
 </script>
 
 <template>
@@ -56,117 +67,286 @@ const { filePanelOpenState } = storeToRefs(store);
         {{ params.name }}
       </div>
       <div class="flex flex-grow"></div>
-      <Dialog>
-        <DialogTrigger @click.stop="">
+      <AlertDialog v-model:open="newFileDialogOpen">
+        <AlertDialogTrigger @click.stop="">
           <div v-if="isHover">
             <Icon icon="lucide:file-plus" class="w-4 h-4 mr-2 flex-shrink-0" />
           </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create New File</DialogTitle>
-            <DialogDescription> </DialogDescription>
-            <Input placeholder="New File Name" />
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose as-child>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="button" variant="default">Create</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Dialog>
-        <DialogTrigger @click.stop="">
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle
+              >Create new file in {{ props.params.name }}</AlertDialogTitle
+            >
+            <AlertDialogDescription> </AlertDialogDescription>
+            <Input v-model="newFileDialogInput" placeholder="New File Name" />
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel as-child>
+              <Button
+                :disabled="dialogLoading"
+                type="button"
+                variant="secondary"
+                >Close</Button
+              >
+            </AlertDialogCancel>
+            <div v-if="dialogLoading == false">
+              <Button
+                @click="
+                  () => {
+                    dialogLoading = true;
+                    store
+                      .filePanelHandleNewFileFolder(
+                        props.params.path,
+                        newFileDialogInput
+                      )
+                      .then(() => {
+                        newFileDialogOpen = false;
+                        dialogLoading = false;
+                      });
+                  }
+                "
+                type="button"
+                variant="default"
+              >
+                Create
+              </Button>
+            </div>
+            <div v-else>
+              <Button disabled variant="default">
+                <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+                Please wait
+              </Button>
+            </div>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog v-model:open="newFolderDialogOpen">
+        <AlertDialogTrigger @click.stop="">
           <div v-if="isHover">
             <Icon
               icon="lucide:folder-plus"
               class="w-4 h-4 mr-2 flex-shrink-0"
             />
           </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create New Folder</DialogTitle>
-            <DialogDescription> </DialogDescription>
-            <Input placeholder="New Folder Name" />
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose as-child>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="button" variant="default">Create</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Dialog>
-        <DialogTrigger @click.stop="">
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle
+              >Create new folder in {{ props.params.name }}</AlertDialogTitle
+            >
+            <AlertDialogDescription> </AlertDialogDescription>
+            <Input
+              v-model="newFolderDialogInput"
+              placeholder="New Folder Name"
+            />
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel as-child>
+              <Button
+                :disabled="dialogLoading"
+                type="button"
+                variant="secondary"
+                >Close</Button
+              >
+            </AlertDialogCancel>
+            <div v-if="dialogLoading == false">
+              <Button
+                @click="
+                  () => {
+                    dialogLoading = true;
+                    store
+                      .filePanelHandleNewFolderFolder(
+                        props.params.path,
+                        newFolderDialogInput
+                      )
+                      .then(() => {
+                        newFolderDialogOpen = false;
+                        dialogLoading = false;
+                      });
+                  }
+                "
+                type="button"
+                variant="default"
+              >
+                Create
+              </Button>
+            </div>
+            <div v-else>
+              <Button disabled variant="default">
+                <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+                Please wait
+              </Button>
+            </div>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog v-model:open="uploadDialogOpen">
+        <AlertDialogTrigger @click.stop="">
           <div v-if="isHover">
             <Icon icon="lucide:upload" class="w-4 h-4 mr-2 flex-shrink-0" />
           </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Upload files to {{ props.params.name }}</DialogTitle>
-            <DialogDescription> </DialogDescription>
-            <Input type="file" multiple="multiplt" />
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose as-child>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="button" variant="default">Upload</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Dialog>
-        <DialogTrigger @click.stop="">
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle
+              >Upload files to {{ props.params.name }}</AlertDialogTitle
+            >
+            <AlertDialogDescription> </AlertDialogDescription>
+            <Input
+              v-model="newFolderDialogInput"
+              placeholder="New Folder Name"
+            />
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel as-child>
+              <Button
+                :disabled="dialogLoading"
+                type="button"
+                variant="secondary"
+                >Close</Button
+              >
+            </AlertDialogCancel>
+            <div v-if="dialogLoading == false">
+              <Button
+                @click="
+                  () => {
+                    dialogLoading = true;
+                    store
+                      .filePanelHandleNewFolderFolder(
+                        props.params.path,
+                        newFolderDialogInput
+                      )
+                      .then(() => {
+                        newFolderDialogOpen = false;
+                        dialogLoading = false;
+                      });
+                  }
+                "
+                type="button"
+                variant="default"
+              >
+                Upload
+              </Button>
+            </div>
+            <div v-else>
+              <Button disabled variant="default">
+                <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+                Please wait
+              </Button>
+            </div>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog v-model:open="renameDialogOpen">
+        <AlertDialogTrigger @click.stop="">
           <div v-if="isHover">
             <Icon
               icon="lucide:text-cursor-input"
               class="w-4 h-4 mr-2 flex-shrink-0"
             />
           </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Rename {{ props.params.name }}</DialogTitle>
-            <DialogDescription> </DialogDescription>
-            <Input placeholder="New File Name" />
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose as-child>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="button" variant="default">Rename</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      <Dialog>
-        <DialogTrigger @click.stop="">
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Rename {{ props.params.name }}</AlertDialogTitle>
+            <AlertDialogDescription> </AlertDialogDescription>
+            <Input v-model="renameDialogInput" placeholder="New File Name" />
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel as-child>
+              <Button
+                :disabled="dialogLoading"
+                type="button"
+                variant="secondary"
+                >Close</Button
+              >
+            </AlertDialogCancel>
+            <div v-if="dialogLoading == false">
+              <Button
+                @click="
+                  () => {
+                    dialogLoading = true;
+                    store
+                      .filePanelHandleRenameFolder(
+                        props.params.path,
+                        renameDialogInput
+                      )
+                      .then(() => {
+                        renameDialogOpen = false;
+                        dialogLoading = false;
+                      });
+                  }
+                "
+                type="button"
+                variant="default"
+              >
+                Rename
+              </Button>
+            </div>
+            <div v-else>
+              <Button disabled variant="default">
+                <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+                Please wait
+              </Button>
+            </div>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog v-model:open="deleteDialogOpen">
+        <AlertDialogTrigger @click.stop="">
           <div v-if="isHover">
             <Icon icon="lucide:trash-2" class="w-4 h-4 mr-2 flex-shrink-0" />
           </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle
               >Are you absolutely sure to delete
-              {{ props.params.name }}?</DialogTitle
+              {{ props.params.name }}?</AlertDialogTitle
             >
-            <DialogDescription>
+            <AlertDialogDescription>
               This action cannot be undone. Are you sure you want to permanently
               delete {{ props.params.name }}?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose as-child>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
-            <Button type="button" variant="destructive">Delete</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel as-child>
+              <Button
+                :disabled="dialogLoading"
+                type="button"
+                variant="secondary"
+                >Close</Button
+              >
+            </AlertDialogCancel>
+            <div v-if="dialogLoading == false">
+              <Button
+                @click="
+                  () => {
+                    dialogLoading = true;
+                    store
+                      .filePanelHandleDeleteFolder(props.params.path)
+                      .then(() => {
+                        deleteDialogOpen = false;
+                        dialogLoading = false;
+                      });
+                  }
+                "
+                type="button"
+                variant="destructive"
+              >
+                Delete
+              </Button>
+            </div>
+            <div v-else>
+              <Button disabled variant="destructive">
+                <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+                Please wait
+              </Button>
+            </div>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </CollapsibleTrigger>
     <CollapsibleContent class="flex flex-col relative">
       <div
