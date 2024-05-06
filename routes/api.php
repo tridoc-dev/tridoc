@@ -29,9 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
 //        Route::delete('{project}', [ProjectController::class, 'destroy']);
     });
 
-    Route::prefix('editor')->group(function () {
-        // Route::post('update', [EditorController::class, 'update']);
+    Route::prefix('editor/{project}')->group(function () {
+        Route::get('', [EditorController::class, 'list']);
 
-        Route::post('update/{project}', [EditorController::class, 'update'])->whereNumber('project');
-    });
+        Route::get('{filename}', [EditorController::class, 'get']);
+        Route::put('{filename}', [EditorController::class, 'put']);
+    })->whereNumber('project');
 });

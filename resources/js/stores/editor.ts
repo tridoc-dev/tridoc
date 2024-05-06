@@ -24,7 +24,7 @@ export const useEditorStore = defineStore("editor", () => {
     } else {
       processingSendDocumentContent.value = true;
       api
-        .post("/editor/update/" + projectId, { content })
+        .put(`/editor/${projectId}/main.tex`, { content })
         .then((response) => {
           console.log(response);
         })
@@ -37,7 +37,11 @@ export const useEditorStore = defineStore("editor", () => {
   const filePanelFileList = ref<FileTreeItem[]>([]);
   const filePanelOpenState = ref<{ [key: string]: boolean }>({});
 
-  function updateFilePanelFileList() {
+  function updateFilePanelFileList(projectId: string) {
+    api.get(`/editor/${projectId}`).then((response) => {
+        console.log(response);
+    })
+
     filePanelFileList.value = [
       {
         isFolder: false,

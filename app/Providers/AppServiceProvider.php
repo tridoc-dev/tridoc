@@ -30,12 +30,6 @@ class AppServiceProvider extends ServiceProvider
             return config('app.url') . '/auth/reset/' . $token . '?email=' . urlencode($user->email);
         });
 
-        $this->app->when(EditorController::class)
-            ->needs(Filesystem::class)
-            ->give(function () {
-                return Storage::disk('sftp');
-            });
-
         $this->app->singleton(DockerService::class, function () {
             return new DockerService();
         });

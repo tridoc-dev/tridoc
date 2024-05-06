@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Editor;
 
 use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProjectFile extends FormRequest
+class GetProjectFileRequest extends FormRequest
 {
     public Project $project;
+    public string $filename;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -16,8 +17,13 @@ class UpdateProjectFile extends FormRequest
     {
         try {
             $this->project = Project::findOrFail($this->route('project'));
+            $this->filename = $this->route('filename');
 
-            return $this->user()->can('update', $this->project);
+            if (str_contains($this->filename, '..')) {
+                return false;
+            }
+
+            return $this->user()->can('view', $this->project);
         } catch (\Throwable $th) {
             return false;
         }
