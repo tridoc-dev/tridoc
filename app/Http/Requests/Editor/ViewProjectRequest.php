@@ -5,7 +5,7 @@ namespace App\Http\Requests\Editor;
 use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ListProjectFileRequest extends FormRequest
+class ViewProjectRequest extends FormRequest
 {
     public Project $project;
 

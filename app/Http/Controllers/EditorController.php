@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Editor\GetProjectFileRequest;
-use App\Http\Requests\Editor\ListProjectFileRequest;
+use App\Http\Requests\Editor\ViewProjectRequest;
 use App\Http\Requests\Editor\UpdateProjectFileRequest;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
 class EditorController extends Controller
 {
-    public function list(ListProjectFileRequest $request, Filesystem $disk)
+    public function list(ViewProjectRequest $request, Filesystem $disk)
     {
         $path = 'storage/projects/' . $request->project->id;
         $list = $disk->allFiles($path);

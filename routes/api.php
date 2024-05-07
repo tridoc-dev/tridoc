@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EditorController;
+use App\Http\Controllers\LaTeXController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('{filename}', [EditorController::class, 'get'])->where('filename', '.*');
         Route::put('{filename}', [EditorController::class, 'put'])->where('filename', '.*');
+    })->whereNumber('project');
+
+    Route::prefix('action/{project}')->group(function () {
+        Route::post('latex', [LaTeXController::class, 'compile']);
     })->whereNumber('project');
 });
