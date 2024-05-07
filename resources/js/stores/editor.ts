@@ -16,7 +16,7 @@ export const useEditorStore = defineStore("editor", () => {
   const currentOpenFile = ref("");
 
   const previewPdfScale = ref(1);
-  const previewPdfUrl = ref("/test.pdf");
+  const previewPdfUrl = ref("/main.pdf");
 
   const processingSendDocumentContent = ref(false);
   function sendDocumentContent(content: string, projectId: string) {
@@ -77,7 +77,6 @@ export const useEditorStore = defineStore("editor", () => {
     var content = "";
     await api.get(`/editor/${projectId}/${path}`).then((response) => {
       content = response.data.toString();
-      console.log(`CONTENT: ${response}`);
     });
     return content;
   }
@@ -166,6 +165,18 @@ export const useEditorStore = defineStore("editor", () => {
     });
   }
 
+  function compileLatex(projectId: string) {
+    api
+      .post(`action/${projectId}/latex`, {}, { responseType: "blob" })
+      .then((response) => {
+        previewPdfUrl.value = window.URL.createObjectURL(
+          new Blob([response.data], { type: "application/pdf" })
+        );
+        console.log(response);
+        console.log(previewPdfUrl.value);
+      });
+  }
+
   return {
     settingEnableVimMode,
     settingSwitchVimMode,
@@ -187,5 +198,6 @@ export const useEditorStore = defineStore("editor", () => {
     filePanelHandleUploadFolder,
     filePanelHandleRenameFolder,
     filePanelHandleDeleteFolder,
+    compileLatex,
   };
 });

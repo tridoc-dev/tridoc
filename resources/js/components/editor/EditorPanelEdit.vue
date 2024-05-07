@@ -7,32 +7,14 @@ import { useEditorStore } from "@/stores/editor";
 import { ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 
-import api from "@/api";
-
 const store = useEditorStore();
 const route = useRoute();
 const state: string = "good";
-
-async function anotherGetFileContent(projectId: string, path: string | null) {
-  var content = "";
-  await api.get(`/editor/${projectId}/${path}`).then((response) => {
-    // content = response.data;
-    // console.log(`CONTENT: ${response}`);
-  });
-  return content;
-}
 
 const codeContent = ref();
 const realCodeContent = ref("");
 watchEffect(() => {
   console.log(store.currentOpenFile);
-
-  // anotherGetFileContent(route.params.id.toString(), store.currentOpenFile).then(
-  //   (res) => {
-  //     console.log(res);
-  //     codeContent.value = res;
-  //   }
-  // );
 
   store
     .getFileContent(route.params.id.toString(), store.currentOpenFile)
@@ -79,7 +61,10 @@ watchEffect(() => {
       <div class="flex flex-grow"></div>
       <div class="w-fit">
         <ToggleGroup>
-          <ToggleGroupItem value="left">
+          <ToggleGroupItem
+            value="left"
+            @click="store.compileLatex(route.params.id.toString())"
+          >
             <div v-if="state == 'error'">
               <Icon icon="lucide:x" class="w-4 h-4" />
             </div>

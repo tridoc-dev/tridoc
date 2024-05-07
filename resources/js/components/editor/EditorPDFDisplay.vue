@@ -6,7 +6,10 @@ import { useEditorStore } from "@/stores/editor";
 const store = useEditorStore();
 const pdfUrl = defineModel();
 
-const { pdf, pages } = usePDF(pdfUrl);
+const { pdf, pages } = usePDF({
+  url: pdfUrl.value,
+  cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/",
+});
 </script>
 
 <template>
