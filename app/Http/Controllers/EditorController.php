@@ -52,7 +52,7 @@ class EditorController extends Controller
         try {
             $content = $disk->get($path);
 
-            return response()->ok($content);
+            return response($content);
         } catch (\Throwable $th) {
             return response()->error($th->getMessage());
         }

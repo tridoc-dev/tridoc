@@ -27,12 +27,12 @@ const realCodeContent = ref("");
 watchEffect(() => {
   console.log(store.currentOpenFile);
 
-  anotherGetFileContent(route.params.id.toString(), store.currentOpenFile).then(
-    (res) => {
-      console.log(res);
-      codeContent.value = res;
-    }
-  );
+  // anotherGetFileContent(route.params.id.toString(), store.currentOpenFile).then(
+  //   (res) => {
+  //     console.log(res);
+  //     codeContent.value = res;
+  //   }
+  // );
 
   store
     .getFileContent(route.params.id.toString(), store.currentOpenFile)
