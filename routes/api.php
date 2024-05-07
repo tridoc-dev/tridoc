@@ -24,15 +24,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('projects')->group(function () {
         Route::get('', [ProjectController::class, 'index']);
         Route::post('', [ProjectController::class, 'store']);
-//        Route::get('{project}', [ProjectController::class, 'show']);
-//        Route::put('{project}', [ProjectController::class, 'update']);
-//        Route::delete('{project}', [ProjectController::class, 'destroy']);
     });
 
     Route::prefix('editor/{project}')->group(function () {
         Route::get('', [EditorController::class, 'list']);
 
-        Route::get('{filename}', [EditorController::class, 'get']);
-        Route::put('{filename}', [EditorController::class, 'put']);
+        Route::get('{filename}', [EditorController::class, 'get'])->where('filename', '.*');
+        Route::put('{filename}', [EditorController::class, 'put'])->where('filename', '.*');
     })->whereNumber('project');
 });
