@@ -5,16 +5,41 @@ import { Icon } from "@iconify/vue";
 import CodeMirrorEditor from "./EditorCMEditor.vue";
 import { useEditorStore } from "@/stores/editor";
 import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+
+import api from "@/api";
 
 const store = useEditorStore();
+const route = useRoute();
 const state: string = "good";
+
+async function anotherGetFileContent(projectId: string, path: string | null) {
+  var content = "";
+  await api.get(`/editor/${projectId}/${path}`).then((response) => {
+    // content = response.data;
+    // console.log(`CONTENT: ${response}`);
+  });
+  return content;
+}
 
 const codeContent = ref();
 const realCodeContent = ref("");
 watchEffect(() => {
-  codeContent.value = store.getFileContent(
-    store.getFileContent(store.currentOpenFile)
+  console.log(store.currentOpenFile);
+
+  anotherGetFileContent(route.params.id.toString(), store.currentOpenFile).then(
+    (res) => {
+      console.log(res);
+      codeContent.value = res;
+    }
   );
+
+  store
+    .getFileContent(route.params.id.toString(), store.currentOpenFile)
+    .then((res) => {
+      console.log(codeContent.value);
+      codeContent.value = res;
+    });
   realCodeContent.value = codeContent == null ? "" : codeContent.value;
 });
 </script>

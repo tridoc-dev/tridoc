@@ -7,10 +7,13 @@ import { Icon } from "@iconify/vue";
 import { useEditorStore } from "@/stores/editor";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
+import { onMounted } from "vue";
 const store = useEditorStore();
 const { currentOpenFile } = storeToRefs(store);
 
 const route = useRoute();
+
+store.updateFilePanelFileList(route.params.id.toString());
 </script>
 
 <template>
@@ -18,10 +21,10 @@ const route = useRoute();
     <template #title> Files </template>
     <template #options>
       <ToggleGroup type="multiple">
-        <ToggleGroupItem value="left" @click="store.updateFilePanelFileList2()">
+        <ToggleGroupItem value="left">
           <Icon icon="lucide:file-plus" class="w-4 h-4" />
         </ToggleGroupItem>
-        <ToggleGroupItem value="left" @click="store.updateFilePanelFileList(route.params.id.toString())">
+        <ToggleGroupItem value="left">
           <Icon icon="lucide:folder-plus" class="w-4 h-4" />
         </ToggleGroupItem>
         <ToggleGroupItem value="center">
