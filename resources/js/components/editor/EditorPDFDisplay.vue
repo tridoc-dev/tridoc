@@ -4,10 +4,9 @@ import { VuePDF, usePDF } from "@tato30/vue-pdf";
 import { useEditorStore } from "@/stores/editor";
 
 const store = useEditorStore();
-const pdfUrl = defineModel();
 
 const { pdf, pages } = usePDF({
-  url: pdfUrl.value,
+  url: store.previewPdfUrl,
   cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/",
 });
 </script>

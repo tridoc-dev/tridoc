@@ -9,10 +9,8 @@ import { useRoute } from "vue-router";
 
 const store = useEditorStore();
 const route = useRoute();
-const state: string = "good";
 
-const codeContent = ref();
-const realCodeContent = ref("");
+const codeContent = ref("");
 watchEffect(() => {
   console.log(store.currentOpenFile);
 
@@ -22,7 +20,6 @@ watchEffect(() => {
       console.log(codeContent.value);
       codeContent.value = res;
     });
-  realCodeContent.value = codeContent == null ? "" : codeContent.value;
 });
 </script>
 
@@ -65,16 +62,16 @@ watchEffect(() => {
             value="left"
             @click="store.compileLatex(route.params.id.toString())"
           >
-            <div v-if="state == 'error'">
+            <!-- <div v-if="state == 'error'">
               <Icon icon="lucide:x" class="w-4 h-4" />
-            </div>
-            <div v-if="state == 'good'">
+            </div> -->
+            <div v-if="store.compileLatexStatus == 'finish'">
               <Icon icon="lucide:check" class="w-4 h-4" />
             </div>
-            <div v-if="state == 'warning'">
+            <!-- <div v-if="state == 'warning'">
               <Icon icon="lucide:triangle-alert" class="w-4 h-4" />
-            </div>
-            <div v-if="state == 'loading'">
+            </div> -->
+            <div v-if="store.compileLatexStatus == 'compiling'">
               <Loader2 class="w-4 h-4 animate-spin" />
             </div>
           </ToggleGroupItem>
@@ -88,7 +85,7 @@ watchEffect(() => {
         class="w-full h-full border bg-background rounded-t-md flex items-center justify-center overflow-hidden"
       >
         <div class="w-full h-full root-wrapper">
-          <CodeMirrorEditor v-model="realCodeContent" />
+          <CodeMirrorEditor />
         </div>
       </div>
     </div>

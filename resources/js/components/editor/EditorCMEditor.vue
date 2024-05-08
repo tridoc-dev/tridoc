@@ -8,24 +8,13 @@ import { autocompletion, completeFromList } from "@codemirror/autocomplete";
 import { StreamLanguage } from "@codemirror/language";
 import { keymap } from "@codemirror/view";
 import { ref, shallowRef, watchEffect } from "vue";
-import * as Y from "yjs";
-// import { WebsocketProvider } from "y-websocket";
-// import { yCollab } from "y-codemirror.next";
 import { useEditorStore } from "../../stores/editor";
 import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
 
-const code = defineModel<string>();
-
-// const provider = new WebsocketProvider(
-//   'ws://localhost:8080',
-//   'codemirror-demo',
-//   ydoc
-// )
 const store = useEditorStore();
+const { code } = storeToRefs(store);
 const completions = completeFromList(texSnippets);
-const ydoc = new Y.Doc();
-const ytext = ydoc.getText("codemirror-demo");
-// const code = ytext.toString();
 const extensions = ref([] as any);
 const view = shallowRef();
 const handleReady = (payload: { view: any }) => {
@@ -34,19 +23,15 @@ const handleReady = (payload: { view: any }) => {
 
 const route = useRoute();
 
-function saveCallback(view: EditorView) {
-  console.log("save");
-  // console.log(view.state.doc.toString());
-
-  store.sendDocumentContent(
-    view.state.doc.toString(),
-    route.params.id.toString()
-  );
+async function saveCallback() {
+  store.compileLatexStatus = "compiling";
+  await store.sendDocumentContent(route.params.id.toString());
+  await store.compileLatex(route.params.id.toString());
   return true;
 }
 
 Vim.defineEx("write", "w", function (_view: { cm6: any }) {
-  saveCallback(_view.cm6);
+  saveCallback();
 });
 
 watchEffect(() => {
@@ -58,7 +43,7 @@ watchEffect(() => {
         fontFamily: store.settingEditorFontFamily,
       },
     }),
-    // autocompletion({ override: [completions] }),
+    autocompletion({ override: [completions] }),
     // yCollab(ytext),
   ];
 
@@ -68,7 +53,8 @@ watchEffect(() => {
       {
         key: "Ctrl-s",
         run(_view) {
-          return saveCallback(_view);
+          saveCallback();
+          return true;
         },
       },
     ]),

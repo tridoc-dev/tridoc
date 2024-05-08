@@ -48,7 +48,7 @@ const store = useEditorStore();
       <div
         class="w-full h-full border rounded-t-md flex overflow-scroll bg-[#e4e5ea]"
       >
-        <EditorPDFDisplay v-model="store.previewPdfUrl"></EditorPDFDisplay>
+        <EditorPDFDisplay :key="store.previewPdfUrl"></EditorPDFDisplay>
       </div>
     </div>
   </div>

@@ -31,7 +31,7 @@ const props = defineProps<{
   params: FileTreeItem;
   indentSize: number;
 }>();
-const chosenFile = defineModel<string>();
+const { currentOpenFile } = storeToRefs(store);
 store.initFilePanelOpenState(props.params.path);
 const { filePanelOpenState } = storeToRefs(store);
 
@@ -361,14 +361,12 @@ const renameDialogInput = ref(props.params.name);
         <div v-if="item.isFolder">
           <FolderItem
             :params="item"
-            v-model="chosenFile"
             :indent-size="props.indentSize + 1"
           ></FolderItem>
         </div>
         <div v-else>
           <FileItem
             :params="item"
-            v-model="chosenFile"
             :indent-size="props.indentSize + 1"
           ></FileItem>
         </div>

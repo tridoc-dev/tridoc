@@ -13,21 +13,25 @@ export const useEditorStore = defineStore("editor", () => {
   const settingEditorFontFamily = ref("");
   const settingEditorFontSize = ref("");
 
+  const displayOpenFile = ref("");
   const currentOpenFile = ref("");
 
   const previewPdfScale = ref(1);
   const previewPdfUrl = ref("/main.pdf");
 
-  const processingSendDocumentContent = ref(false);
-  function sendDocumentContent(content: string, projectId: string) {
-    if (processingSendDocumentContent.value) {
-      return;
+  const sendingDocumentContent = ref(false);
+  async function sendDocumentContent(projectId: string) {
+    if (sendingDocumentContent.value) {
+      return null;
     } else {
-      processingSendDocumentContent.value = true;
-      api
-        .put(`/editor/${projectId}/main.tex`, { content })
+      sendingDocumentContent.value = true;
+      return api
+        .put(`/editor/${projectId}/${currentOpenFile.value}`, {
+          content: code.value,
+        })
         .then((response) => {
           console.log(response);
+          sendingDocumentContent.value = false;
         })
         .catch((error) => {
           console.log(error);
@@ -73,12 +77,23 @@ export const useEditorStore = defineStore("editor", () => {
       filePanelOpenState.value[path] = false;
   }
 
-  async function getFileContent(projectId: string, path: string | null) {
+  const code = ref("");
+
+  async function getFileContent(projectId: string, path: string) {
     var content = "";
     await api.get(`/editor/${projectId}/${path}`).then((response) => {
       content = response.data.toString();
+      code.value = content;
+      displayOpenFile.value = path;
     });
     return content;
+  }
+
+  async function updateFileContent(projectId: string, path: string) {
+    await api.get(`/editor/${projectId}/${path}`).then((response) => {
+      code.value = response.data.toString();
+      displayOpenFile.value = path;
+    });
   }
 
   function filePanelHandleRenameFile(
@@ -165,15 +180,17 @@ export const useEditorStore = defineStore("editor", () => {
     });
   }
 
+  const compileLatexStatus = ref("finish");
+
   function compileLatex(projectId: string) {
+    compileLatexStatus.value = "compiling";
     api
       .post(`action/${projectId}/latex`, {}, { responseType: "blob" })
       .then((response) => {
         previewPdfUrl.value = window.URL.createObjectURL(
           new Blob([response.data], { type: "application/pdf" })
         );
-        console.log(response);
-        console.log(previewPdfUrl.value);
+        compileLatexStatus.value = "finish";
       });
   }
 
@@ -182,6 +199,7 @@ export const useEditorStore = defineStore("editor", () => {
     settingSwitchVimMode,
     settingEditorFontFamily,
     settingEditorFontSize,
+    displayOpenFile,
     currentOpenFile,
     previewPdfScale,
     previewPdfUrl,
@@ -190,7 +208,9 @@ export const useEditorStore = defineStore("editor", () => {
     filePanelOpenState,
     updateFilePanelFileList,
     initFilePanelOpenState,
+    code,
     getFileContent,
+    updateFileContent,
     filePanelHandleRenameFile,
     filePanelHandleDeleteFile,
     filePanelHandleNewFileFolder,
@@ -198,6 +218,7 @@ export const useEditorStore = defineStore("editor", () => {
     filePanelHandleUploadFolder,
     filePanelHandleRenameFolder,
     filePanelHandleDeleteFolder,
+    compileLatexStatus,
     compileLatex,
   };
 });

@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { computed, ref } from "vue";
 import { Loader2 } from "lucide-vue-next";
 import { useEditorStore } from "@/stores/editor";
+import { storeToRefs } from "pinia";
 
 const store = useEditorStore();
 
@@ -23,15 +24,22 @@ const props = defineProps<{
   params: FileTreeItem;
   indentSize: number;
 }>();
-const chosenFile = defineModel<string>();
+const { currentOpenFile, displayOpenFile } = storeToRefs(store);
 
 const isChoosen = computed(() => {
-  return chosenFile.value == props.params.path;
+  return displayOpenFile.value == props.params.path;
+});
+
+const isLoading = computed(() => {
+  return (
+    currentOpenFile.value == props.params.path &&
+    displayOpenFile.value != currentOpenFile.value
+  );
 });
 const isHover = ref(false);
 
 function handleClick() {
-  chosenFile.value = props.params.path;
+  currentOpenFile.value = props.params.path;
 }
 
 const baseBgStyle = "flex flex-row h-9 w-full pl-4 text-sm items-center pr-0.5";
@@ -63,10 +71,15 @@ const renameDialogInput = ref(props.params.name);
     <div v-for="i in props.indentSize">
       <div class="w-5"></div>
     </div>
-    <Icon
-      icon="tdesign:file"
-      :class="isChoosen ? choosenIconStyle : normalIconStyle"
-    />
+    <div v-if="isLoading">
+      <Loader2 :class="normalIconStyle + ' animate-spin'" />
+    </div>
+    <div v-else>
+      <Icon
+        icon="tdesign:file"
+        :class="isChoosen ? choosenIconStyle : normalIconStyle"
+      />
+    </div>
     <div :class="isChoosen ? choosenTextStyle : normalTextStyle">
       {{ props.params.name }}
     </div>
