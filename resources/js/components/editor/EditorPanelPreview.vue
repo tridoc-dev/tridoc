@@ -7,6 +7,16 @@ import EditorPDFDisplay from "./EditorPDFDisplay.vue";
 import { useEditorStore } from "../../stores/editor";
 
 const store = useEditorStore();
+
+function downloadPdfFile() {
+  let link = document.createElement("a");
+  link.style.display = "none";
+  link.href = store.previewPdfUrl;
+  link.setAttribute("download", "main.pdf");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 </script>
 
 <template>
@@ -36,7 +46,7 @@ const store = useEditorStore();
       <div class="flex flex-grow"></div>
       <div class="w-fit">
         <ToggleGroup>
-          <ToggleGroupItem value="left">
+          <ToggleGroupItem value="left" @click="downloadPdfFile">
             <Icon icon="lucide:download" class="w-4 h-4" />
           </ToggleGroupItem>
         </ToggleGroup>
