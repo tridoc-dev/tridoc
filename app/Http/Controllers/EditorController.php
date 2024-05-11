@@ -42,6 +42,21 @@ class EditorController extends Controller
             $list
         );
 
+        $dirs = $disk->allDirectories($path);
+        foreach ($dirs as $dir) {
+            $trimmed = str_replace($path . '/', '', $dir);
+            $levels = explode('/', $trimmed);
+
+            $current = &$result;
+            foreach ($levels as $level) {
+                if (!isset($current[$level])) {
+                    $current[$level] = [];
+                }
+
+                $current = &$current[$level];
+            }
+        }
+
         return response()->ok($result);
     }
 
@@ -64,6 +79,11 @@ class EditorController extends Controller
         $disk->makeDirectory(dirname($path));
 
         try {
+            if ($request->has('directory')) {
+                $disk->makeDirectory($path);
+                return response()->ok();
+            }
+
             if ($request->hasFile('file')) {
                 $disk->put($path, $request->file('file'));
             } else if ($request->has('content')) {
@@ -71,6 +91,19 @@ class EditorController extends Controller
             }
 
             return response()->ok($disk->size($path));
+        } catch (\Throwable $th) {
+            return response()->error($th->getMessage());
+        }
+    }
+
+    public function delete(UpdateProjectFileRequest $request, Filesystem $disk)
+    {
+        $path = 'storage/projects/' . $request->project->id . '/' . $request->filename;
+
+        try {
+            $disk->delete($path);
+
+            return response()->ok();
         } catch (\Throwable $th) {
             return response()->error($th->getMessage());
         }

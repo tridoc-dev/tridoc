@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('{filename}', [EditorController::class, 'get'])->where('filename', '.*');
         Route::put('{filename}', [EditorController::class, 'put'])->where('filename', '.*');
+        Route::delete('{filename}', [EditorController::class, 'delete'])->where('filename', '.*');
     })->whereNumber('project');
 
     Route::prefix('action/{project}')->group(function () {
