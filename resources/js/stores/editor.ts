@@ -65,8 +65,8 @@ export const useEditorStore = defineStore("editor", () => {
     return result;
   }
 
-  function updateFilePanelFileList(projectId: string) {
-    api.get(`/editor/${projectId}`).then((response) => {
+  async function updateFilePanelFileList(projectId: string) {
+    return api.get(`/editor/${projectId}`).then((response) => {
       console.log(response);
       filePanelFileList.value = FileTreeItemParser(response.data.data, "");
     });
@@ -111,15 +111,9 @@ export const useEditorStore = defineStore("editor", () => {
     });
   }
 
-  function filePanelHandleDeleteFile(path: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (currentOpenFile.value == path) {
-          currentOpenFile.value = "";
-        }
-        console.log(`delete file: ${path}`);
-        resolve();
-      }, 1000);
+  async function filePanelHandleDeleteFile(projectId: string, path: string) {
+    return api.delete(`/editor/${projectId}/${path}`).then(async (response) => {
+      const result = await updateFilePanelFileList(projectId);
     });
   }
 

@@ -17,8 +17,10 @@ import { computed, ref } from "vue";
 import { Loader2 } from "lucide-vue-next";
 import { useEditorStore } from "@/stores/editor";
 import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
 
 const store = useEditorStore();
+const route = useRoute();
 
 const props = defineProps<{
   params: FileTreeItem;
@@ -168,7 +170,10 @@ const renameDialogInput = ref(props.params.name);
                 () => {
                   dialogLoading = true;
                   store
-                    .filePanelHandleDeleteFile(props.params.path)
+                    .filePanelHandleDeleteFile(
+                      route.params.id.toString(),
+                      props.params.path
+                    )
                     .then(() => {
                       deleteDialogOpen = false;
                       dialogLoading = false;
