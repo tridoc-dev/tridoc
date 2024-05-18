@@ -29,5 +29,8 @@ jobs:
       - name: Run pnpm install
         run: pnpm install
 
+      - name: Run pnpm build
+        run: npm run build
+
       - name: Run tests
         run: php artisan test # run unit tests only as I failed to figure out how to fix feature tests
