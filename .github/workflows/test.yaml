@@ -1,4 +1,4 @@
-name: ci
+name: test
 on:
   pull_request:
   release:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   Test:
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    if: ${{ !contains(github.event.head_commit.message, '[skip test]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
