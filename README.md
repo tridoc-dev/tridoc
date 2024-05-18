@@ -1,5 +1,7 @@
 # Tridoc
 
+[![test](https://github.com/tridoc-dev/tridoc/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/tridoc-dev/tridoc/actions/workflows/test.yaml)
+
 ## Development
 
 ### Install `php` and `composer`
