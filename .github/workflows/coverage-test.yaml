@@ -1,4 +1,4 @@
-name: test
+name: coverage-test
 on:
   pull_request:
   release:
