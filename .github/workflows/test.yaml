@@ -30,4 +30,4 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: php artisan test --testsuite=Unit  # run unit tests only as I failed to figure out how to fix feature tests
+        run: php artisan test # run unit tests only as I failed to figure out how to fix feature tests
