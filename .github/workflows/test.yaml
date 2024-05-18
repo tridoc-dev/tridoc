@@ -1,4 +1,4 @@
-name: ci
+name: test
 on:
   pull_request:
   release:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   Test:
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    if: ${{ !contains(github.event.head_commit.message, '[skip test]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,5 +29,8 @@ jobs:
       - name: Run pnpm install
         run: pnpm install
 
+      - name: Run pnpm build
+        run: npm run build
+
       - name: Run tests
-        run: php artisan test --testsuite=Unit  # run unit tests only as I failed to figure out how to fix feature tests
+        run: php artisan test # run unit tests only as I failed to figure out how to fix feature tests
