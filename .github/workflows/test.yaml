@@ -32,5 +32,10 @@ jobs:
       - name: Run pnpm build
         run: npm run build
 
-      - name: Run tests
-        run: php artisan test # run unit tests only as I failed to figure out how to fix feature tests
+      - name: Run tests and collect coverage reports
+        run: php artisan test --coverage-clover coverage.xml
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

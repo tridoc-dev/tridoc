@@ -1,5 +1,8 @@
 # Tridoc
 
+[![test](https://github.com/tridoc-dev/tridoc/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/tridoc-dev/tridoc/actions/workflows/test.yaml)
+[![codecov](https://codecov.io/github/tridoc-dev/tridoc/graph/badge.svg?token=2OEX2WD3UJ)](https://codecov.io/github/tridoc-dev/tridoc)
+
 ## Development
 
 ### Install `php` and `composer`
