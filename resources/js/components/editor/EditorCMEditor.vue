@@ -7,12 +7,14 @@ import { stex } from "@codemirror/legacy-modes/mode/stex";
 import { autocompletion, completeFromList } from "@codemirror/autocomplete";
 import { StreamLanguage } from "@codemirror/language";
 import { keymap } from "@codemirror/view";
-import { ref, shallowRef, watchEffect } from "vue";
+import { onMounted, ref, shallowRef, watchEffect } from "vue";
 import { useEditorStore } from "../../stores/editor";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
+import { defineExpose } from 'vue';
 
 const store = useEditorStore();
+const selectedText = ref("");
 const { code } = storeToRefs(store);
 const completions = completeFromList(texSnippets);
 const extensions = ref([] as any);
@@ -23,6 +25,24 @@ const handleReady = (payload: { view: any }) => {
 
 const route = useRoute();
 
+function getSelectedText(view: EditorView): void {
+  const selection = view.state.selection.main;
+  const selectedRange = {
+    from: selection.from,
+    to: selection.to,
+  };
+  const selectedTextValue = view.state.doc.sliceString(
+    selectedRange.from,
+    selectedRange.to
+  );
+  selectedText.value = selectedTextValue;
+}
+
+function getView()
+{
+    return view.value;
+}
+
 async function saveCallback() {
   store.compileLatexStatus = "compiling";
   await store.sendDocumentContent(route.params.id.toString());
@@ -30,8 +50,13 @@ async function saveCallback() {
   return true;
 }
 
+
 Vim.defineEx("write", "w", function (_view: { cm6: any }) {
   saveCallback();
+});
+
+defineExpose({
+  getView
 });
 
 watchEffect(() => {
@@ -63,7 +88,15 @@ watchEffect(() => {
   const vimExt = [...baseExt, vim()];
 
   extensions.value = store.settingEnableVimMode ? vimExt : nonVimExt;
+
+  // if (view.value) {
+  //   view.value.dom.addEventListener("mouseup", () => {
+  //     insertImageCommand(view.value);
+  //   });
+  // }
+
 });
+
 </script>
 
 <template>
