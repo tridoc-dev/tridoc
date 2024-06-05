@@ -111,3 +111,13 @@ test('An existing directory can be deleted from a project', function () {
 
     $response->assertStatus(200);
 })->depends('All newly created files/directories can be listed');
+
+test('An existing file can be renamed in a project', function () {
+    $user = User::factory()->hasProjects(1)->create();
+    $project = $user->projects[0];
+
+    $filename = 'new_directory';
+    $response = $this->actingAs($user)->patch("/api/editor/{$project->id}/{$filename}?newFilename=test");
+
+    $response->assertStatus(200);
+})->depends('All newly created files/directories can be listed');
