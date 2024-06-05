@@ -86,7 +86,7 @@ test('An existing file can be put into a project', function () {
     $response = $this->actingAs($user)->put("/api/editor/{$project->id}/{$filename}", [
         'project' => $project,
         'filename' => $filename,
-        'file' => $filename
+        'upload' => $filename
     ]);
 
     $response->assertStatus(200);
