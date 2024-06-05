@@ -45,6 +45,10 @@ const dialogLoading = ref(false);
 const newFileDialogInput = ref("");
 const newFolderDialogInput = ref("");
 const renameDialogInput = ref(props.params.name);
+
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <template>
@@ -97,6 +101,7 @@ const renameDialogInput = ref(props.params.name);
                     dialogLoading = true;
                     store
                       .filePanelHandleNewFileFolder(
+                        route.params.id.toString(),
                         props.params.path,
                         newFileDialogInput
                       )
@@ -157,6 +162,7 @@ const renameDialogInput = ref(props.params.name);
                     dialogLoading = true;
                     store
                       .filePanelHandleNewFolderFolder(
+                        route.params.id.toString(),
                         props.params.path,
                         newFolderDialogInput
                       )
@@ -193,10 +199,7 @@ const renameDialogInput = ref(props.params.name);
               >Upload files to {{ props.params.name }}</AlertDialogTitle
             >
             <AlertDialogDescription> </AlertDialogDescription>
-            <Input
-              v-model="newFolderDialogInput"
-              placeholder="New Folder Name"
-            />
+            <Input id="file" type="file" />
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel as-child>
@@ -214,6 +217,7 @@ const renameDialogInput = ref(props.params.name);
                     dialogLoading = true;
                     store
                       .filePanelHandleNewFolderFolder(
+                        route.params.id.toString(),
                         props.params.path,
                         newFolderDialogInput
                       )
@@ -269,6 +273,7 @@ const renameDialogInput = ref(props.params.name);
                     dialogLoading = true;
                     store
                       .filePanelHandleRenameFolder(
+                        route.params.id.toString(),
                         props.params.path,
                         renameDialogInput
                       )
@@ -325,7 +330,10 @@ const renameDialogInput = ref(props.params.name);
                   () => {
                     dialogLoading = true;
                     store
-                      .filePanelHandleDeleteFolder(props.params.path)
+                      .filePanelHandleDeleteFolder(
+                        route.params.id.toString(),
+                        props.params.path
+                      )
                       .then(() => {
                         deleteDialogOpen = false;
                         dialogLoading = false;

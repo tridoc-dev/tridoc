@@ -38,7 +38,7 @@ import {
     <template #menu>
       <Menu class="flex">
         <template #menubar>
-          <MenubarMenu>
+          <!-- <MenubarMenu>
             <MenubarTrigger>Placeholder</MenubarTrigger>
             <MenubarContent>
               <MenubarItem>
@@ -50,7 +50,7 @@ import {
               <MenubarSeparator />
               <MenubarItem>Print</MenubarItem>
             </MenubarContent>
-          </MenubarMenu>
+          </MenubarMenu> -->
         </template>
 
         <template #location> Dashboard </template>
@@ -58,7 +58,7 @@ import {
     </template>
 
     <template #sidebar>
-      <Avatar class="w-10 h-10 my-2">
+      <!-- <Avatar class="w-10 h-10 my-2">
         <AvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
@@ -67,7 +67,7 @@ import {
       </Button>
       <Button variant="ghost" class="w-[54px] h-[54px]">
         <CircleHelp />
-      </Button>
+      </Button> -->
     </template>
 
     <template #main>

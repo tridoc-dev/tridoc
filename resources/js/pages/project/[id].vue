@@ -32,7 +32,7 @@ const openSettingsPanel = ref(false);
     <template #menu>
       <Menu class="flex">
         <template #menubar>
-          <MenubarMenu>
+          <!-- <MenubarMenu>
             <MenubarTrigger>File</MenubarTrigger>
             <MenubarContent>
               <MenubarItem>
@@ -83,7 +83,7 @@ const openSettingsPanel = ref(false);
               <MenubarSeparator />
               <MenubarItem>Print</MenubarItem>
             </MenubarContent>
-          </MenubarMenu>
+          </MenubarMenu> -->
         </template>
 
         <template #location> Editor </template>
@@ -111,9 +111,9 @@ const openSettingsPanel = ref(false);
       >
         <Settings />
       </Button>
-      <Button variant="ghost" class="w-[54px] h-[54px]">
+      <!-- <Button variant="ghost" class="w-[54px] h-[54px]">
         <CircleHelp />
-      </Button>
+      </Button> -->
     </template>
 
     <template #main>

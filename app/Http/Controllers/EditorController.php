@@ -87,11 +87,12 @@ class EditorController extends Controller
             if ($request->hasFile('file')) {
                 $disk->put($path, $request->file('file'));
             } else if ($request->has('content')) {
-                $disk->put($path, $request->input('content'));
+                $disk->put($path, $request->input('content') ?? "");
             }
 
             return response()->ok($disk->size($path));
         } catch (\Throwable $th) {
+            throw $th;
             return response()->error($th->getMessage());
         }
     }

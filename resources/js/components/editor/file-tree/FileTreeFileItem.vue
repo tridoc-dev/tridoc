@@ -114,6 +114,7 @@ const renameDialogInput = ref(props.params.name);
                   dialogLoading = true;
                   store
                     .filePanelHandleRenameFile(
+                      route.params.id.toString(),
                       props.params.path,
                       renameDialogInput
                     )

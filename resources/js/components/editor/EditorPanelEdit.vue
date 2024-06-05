@@ -3,20 +3,38 @@ import { ToggleGroupItem, ToggleGroup } from "@/components/ui/toggle-group";
 import { Loader2 } from "lucide-vue-next";
 import { Icon } from "@iconify/vue";
 import CodeMirrorEditor from "./EditorCMEditor.vue";
-import { inject } from 'vue';
+import { inject } from "vue";
 import { EditorView } from "codemirror";
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 import getView from "./EditorCMEditor.vue";
 import { Codemirror } from "vue-codemirror";
 const state: string = "good";
+
+import { useEditorStore } from "@/stores/editor";
+import { watchEffect } from "vue";
+import { useRoute } from "vue-router";
+
+const store = useEditorStore();
+const route = useRoute();
+
+const codeContent = ref("");
+watchEffect(() => {
+  console.log(store.currentOpenFile);
+
+  store
+    .getFileContent(route.params.id.toString(), store.currentOpenFile)
+    .then((res) => {
+      console.log(codeContent.value);
+      codeContent.value = res;
+    });
+});
 
 const codeMirrorEditorRef = ref();
 
 function wrapSelectedTextWithItemize() {
   const view = codeMirrorEditorRef.value.getView();
-  if (!view) 
-  {
+  if (!view) {
     console.warn("null view");
   }
   const selection = view.state.selection.main;
@@ -28,13 +46,13 @@ function wrapSelectedTextWithItemize() {
   let newText: string;
   if (isAlreadyItemize) {
     const items = selectedText
-      .slice(15, -13) 
-      .split("\n") 
+      .slice(15, -13)
+      .split("\n")
       .map((item: string) => item.replace(/^\\item\[\*\]\s*/, ""));
-    newText = items.join(""); 
+    newText = items.join("");
   } else {
     const words = selectedText.split(" ");
-    const items = words.map((word: string) => `\\item[*] ${word}`); 
+    const items = words.map((word: string) => `\\item[*] ${word}`);
     newText = `\\begin{itemize}\n${items.join("\n")}\n\\end{itemize}`;
   }
   const tr = view.state.update({
@@ -49,19 +67,19 @@ function wrapSelectedTextWithItemize() {
 
 function wrapSelectedTextWithBold() {
   const view = codeMirrorEditorRef.value.getView();
-  if (!view) 
-  {
+  if (!view) {
     console.warn("null view");
   }
   const selection = view.state.selection.main;
   const { from, to } = selection;
   const selectedText = view.state.doc.sliceString(from, to);
 
-  const isAlreadyBold = selectedText.startsWith("\\textbf{") && selectedText.endsWith("}");
+  const isAlreadyBold =
+    selectedText.startsWith("\\textbf{") && selectedText.endsWith("}");
 
   let newText: string;
   if (isAlreadyBold) {
-    newText = selectedText.slice(8, -1); 
+    newText = selectedText.slice(8, -1);
   } else {
     newText = "\\textbf{" + selectedText + "}";
   }
@@ -70,8 +88,8 @@ function wrapSelectedTextWithBold() {
     changes: {
       from: from,
       to: to,
-      insert: newText
-    }
+      insert: newText,
+    },
   });
 
   view.dispatch(tr);
@@ -91,7 +109,8 @@ function wrapSelectedTextWithItalic() {
   }
 
   const selectedText = view.state.doc.sliceString(from, to);
-  const isAlreadyItalic = selectedText.startsWith("\\textit{") && selectedText.endsWith("}");
+  const isAlreadyItalic =
+    selectedText.startsWith("\\textit{") && selectedText.endsWith("}");
 
   let newText: string;
   if (isAlreadyItalic) {
@@ -106,7 +125,7 @@ function wrapSelectedTextWithItalic() {
   }
 
   const tr = view.state.update({
-    changes: { from, to, insert: newText }
+    changes: { from, to, insert: newText },
   });
 
   view.dispatch(tr);
@@ -151,23 +170,22 @@ function wrapSelectedTextWithStrikethrough() {
   }
 
   const selectedText = view.state.doc.sliceString(from, to);
-  const isAlreadyStrikethrough = selectedText.startsWith("\\sout{") && selectedText.endsWith("}");
+  const isAlreadyStrikethrough =
+    selectedText.startsWith("\\sout{") && selectedText.endsWith("}");
 
   let newText = isAlreadyStrikethrough
-    ? selectedText.slice(6, -1) 
-    : `\\sout{${selectedText}}`; 
+    ? selectedText.slice(6, -1)
+    : `\\sout{${selectedText}}`;
 
   const tr = view.state.update({
-    changes: { from, to, insert: newText }
+    changes: { from, to, insert: newText },
   });
 
   view.dispatch(tr);
 }
-
 </script>
 
 <template>
-  
   <div class="w-full h-full flex flex-col">
     <div class="flex flex-row">
       <div class="w-fit">
@@ -188,10 +206,16 @@ function wrapSelectedTextWithStrikethrough() {
           <ToggleGroupItem value="italic" @click="wrapSelectedTextWithItalic()">
             <Icon icon="radix-icons:font-italic" class="w-4 h-4" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="strikethrough" @click="wrapSelectedTextWithStrikethrough()">
+          <ToggleGroupItem
+            value="strikethrough"
+            @click="wrapSelectedTextWithStrikethrough()"
+          >
             <Icon icon="radix-icons:strikethrough" class="w-4 h-4" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="strikethrough" @click="wrapSelectedTextWithItemize()">
+          <ToggleGroupItem
+            value="strikethrough"
+            @click="wrapSelectedTextWithItemize()"
+          >
             <Icon icon="radix-icons:list-bullet" class="w-4 h-4" />
           </ToggleGroupItem>
           <ToggleGroupItem value="strikethrough" @click="insertImageCommand()">

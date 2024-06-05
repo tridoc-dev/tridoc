@@ -14,7 +14,7 @@ export const useEditorStore = defineStore("editor", () => {
   const settingEditorFontSize = ref("");
 
   const displayOpenFile = ref("");
-  const currentOpenFile = ref("");
+  const currentOpenFile = ref("main.tex");
 
   const previewPdfScale = ref(1);
   const previewPdfUrl = ref("/main.pdf");
@@ -57,7 +57,7 @@ export const useEditorStore = defineStore("editor", () => {
         result.push({
           isFolder: true,
           name: key,
-          path: key,
+          path: currentPath + key + "/",
           content: FileTreeItemParser(req[key], currentPath + key + "/"),
         });
       }
@@ -96,19 +96,22 @@ export const useEditorStore = defineStore("editor", () => {
     });
   }
 
-  function filePanelHandleRenameFile(
+  async function filePanelHandleRenameFile(
+    projectId: string,
     path: string,
     newName: string
-  ): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (currentOpenFile.value == path) {
-          currentOpenFile.value = "";
-        }
-        console.log(`rename file: ${path} to ${newName}`);
-        resolve();
-      }, 1000);
-    });
+  ) {
+    // get path before /
+    const pathArray = path.split("/");
+    pathArray.pop();
+    const mainPath = pathArray.join("/");
+    return api
+      .patch(`/editor/${projectId}/${path}`, {
+        newFilename: mainPath + "/" + newName,
+      })
+      .then(async (response) => {
+        const result = await updateFilePanelFileList(projectId);
+      });
   }
 
   async function filePanelHandleDeleteFile(projectId: string, path: string) {
@@ -117,60 +120,76 @@ export const useEditorStore = defineStore("editor", () => {
     });
   }
 
-  function filePanelHandleNewFileFolder(
+  async function filePanelHandleNewFileFolder(
+    projectId: string,
     path: string,
     newFileName: string
-  ): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        console.log(`new file in ${path}: ${newFileName}`);
-        resolve();
-      }, 1000);
-    });
+  ) {
+    return api
+      .put(`/editor/${projectId}/${path}/${newFileName}`, {
+        content: "",
+      })
+      .then(async (response) => {
+        const result = await updateFilePanelFileList(projectId);
+      });
   }
 
   function filePanelHandleNewFolderFolder(
+    projectId: string,
     path: string,
     newFolderName: string
-  ): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        console.log(`new folder in ${path}: ${newFolderName}`);
-        resolve();
-      }, 1000);
-    });
+  ) {
+    return api
+      .put(`/editor/${projectId}/${path}/${newFolderName}`, {
+        directory: true,
+      })
+      .then(async (response) => {
+        const result = await updateFilePanelFileList(projectId);
+      });
   }
 
   function filePanelHandleUploadFolder(
+    projectId: string,
     path: string,
     files: File[]
-  ): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        console.log(`upload files in ${path}: ${files}`);
-        resolve();
-      }, 1000);
+  ) {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file);
     });
+    return api
+      .post(`/editor/${projectId}/${path}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(async (response) => {
+        const result = await updateFilePanelFileList(projectId);
+      });
   }
 
-  function filePanelHandleRenameFolder(
+  async function filePanelHandleRenameFolder(
+    projectId: string,
     path: string,
     newName: string
-  ): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        console.log(`rename folder: ${path} to ${newName}`);
-        resolve();
-      }, 1000);
-    });
+  ) {
+    // get path before /
+    const pathArray = path.split("/");
+    pathArray.pop();
+    pathArray.pop();
+    const mainPath = pathArray.join("/");
+    return api
+      .patch(`/editor/${projectId}/${path}`, {
+        newFilename: mainPath + "/" + newName,
+      })
+      .then(async (response) => {
+        const result = await updateFilePanelFileList(projectId);
+      });
   }
 
-  function filePanelHandleDeleteFolder(path: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        console.log(`delete folder: ${path}`);
-        resolve();
-      }, 1000);
+  async function filePanelHandleDeleteFolder(projectId: string, path: string) {
+    return api.delete(`/editor/${projectId}/${path}`).then(async (response) => {
+      const result = await updateFilePanelFileList(projectId);
     });
   }
 
