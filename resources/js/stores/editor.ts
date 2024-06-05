@@ -151,14 +151,12 @@ export const useEditorStore = defineStore("editor", () => {
   function filePanelHandleUploadFolder(
     projectId: string,
     path: string,
-    files: File[]
+    file: File
   ) {
     const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("files", file);
-    });
+    formData.append("upload", file);
     return api
-      .post(`/editor/${projectId}/${path}`, formData, {
+      .post(`/editor/${projectId}/${path}${file.name}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

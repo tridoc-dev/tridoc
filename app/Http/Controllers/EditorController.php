@@ -84,15 +84,16 @@ class EditorController extends Controller
                 return response()->ok();
             }
 
-            if ($request->hasFile('file')) {
-                $disk->put($path, $request->file('file'));
+            if ($request->hasFile('upload')) {
+                $disk->put($path, $request->file('upload')->get());
             } else if ($request->has('content')) {
                 $disk->put($path, $request->input('content') ?? "");
+            } else {
+                return response()->error('No content provided');
             }
 
             return response()->ok($disk->size($path));
         } catch (\Throwable $th) {
-            throw $th;
             return response()->error($th->getMessage());
         }
     }

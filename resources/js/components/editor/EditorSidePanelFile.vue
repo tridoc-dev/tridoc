@@ -5,6 +5,7 @@ import { ToggleGroupItem, ToggleGroup } from "@/components/ui/toggle-group";
 import { Icon } from "@iconify/vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-vue-next";
 
 import {
   AlertDialog,

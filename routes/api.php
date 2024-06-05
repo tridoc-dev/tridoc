@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('', [EditorController::class, 'list']);
 
         Route::get('{filename}', [EditorController::class, 'get'])->where('filename', '.*');
+        Route::post('{filename}', [EditorController::class, 'put'])->where('filename', '.*');
         Route::put('{filename}', [EditorController::class, 'put'])->where('filename', '.*');
         Route::delete('{filename}', [EditorController::class, 'delete'])->where('filename', '.*');
         Route::patch('{filename}', [EditorController::class, 'rename'])->where('filename', '.*');

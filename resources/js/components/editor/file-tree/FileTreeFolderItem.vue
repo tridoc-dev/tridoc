@@ -23,6 +23,7 @@ import { computed, ref } from "vue";
 import { FileTreeItem } from "./model";
 import { useEditorStore } from "@/stores/editor";
 import { storeToRefs } from "pinia";
+import { Loader2 } from "lucide-vue-next";
 
 const store = useEditorStore();
 const isHover = ref(false);
@@ -41,6 +42,8 @@ const uploadDialogOpen = ref(false);
 const renameDialogOpen = ref(false);
 const deleteDialogOpen = ref(false);
 const dialogLoading = ref(false);
+
+const selectedFile = ref<File>();
 
 const newFileDialogInput = ref("");
 const newFolderDialogInput = ref("");
@@ -199,7 +202,7 @@ const route = useRoute();
               >Upload files to {{ props.params.name }}</AlertDialogTitle
             >
             <AlertDialogDescription> </AlertDialogDescription>
-            <Input id="file" type="file" />
+            <Input id="file" type="file" v-on:change="e => { if (e) selectedFile = e.target.files[0] }" />
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel as-child>
@@ -214,20 +217,20 @@ const route = useRoute();
               <Button
                 @click="
                   () => {
+                    if (!selectedFile) return;
                     dialogLoading = true;
                     store
-                      .filePanelHandleNewFolderFolder(
+                      .filePanelHandleUploadFolder(
                         route.params.id.toString(),
                         props.params.path,
-                        newFolderDialogInput
+                        selectedFile
                       )
                       .then(() => {
-                        newFolderDialogOpen = false;
+                        uploadDialogOpen = false;
                         dialogLoading = false;
                       });
-                  }
-                "
-                type="button"
+                  }"
+                type="submit"
                 variant="default"
               >
                 Upload
