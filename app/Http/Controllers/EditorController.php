@@ -108,4 +108,19 @@ class EditorController extends Controller
             return response()->error($th->getMessage());
         }
     }
+
+    public function rename(UpdateProjectFileRequest $request, Filesystem $disk)
+    {
+        $path = 'storage/projects/' . $request->project->id . '/' . $request->filename;
+        $newFilename = $request->input('newFilename');
+        $newPath = 'storage/projects/' . $request->project->id . '/' . $newFilename;
+
+        try {
+            $disk->move($path, $newPath);
+
+            return response()->ok();
+        } catch (\Throwable $th) {
+            return response()->error($th->getMessage());
+        }
+    }
 }
