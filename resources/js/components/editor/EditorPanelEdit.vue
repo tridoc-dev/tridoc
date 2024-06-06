@@ -226,17 +226,20 @@ function wrapSelectedTextWithStrikethrough() {
       <div class="flex flex-grow"></div>
       <div class="w-fit">
         <ToggleGroup>
-          <ToggleGroupItem value="left">
-            <div v-if="state == 'error'">
+          <ToggleGroupItem
+            value="left"
+            @click="store.compileLatex(route.params.id.toString())"
+          >
+            <!-- <div v-if="state == 'error'">
               <Icon icon="lucide:x" class="w-4 h-4" />
-            </div>
-            <div v-if="state == 'good'">
+            </div> -->
+            <div v-if="store.compileLatexStatus == 'finish'">
               <Icon icon="lucide:check" class="w-4 h-4" />
             </div>
-            <div v-if="state == 'warning'">
+            <!-- <div v-if="state == 'warning'">
               <Icon icon="lucide:triangle-alert" class="w-4 h-4" />
-            </div>
-            <div v-if="state == 'loading'">
+            </div> -->
+            <div v-if="store.compileLatexStatus == 'compiling'">
               <Loader2 class="w-4 h-4 animate-spin" />
             </div>
           </ToggleGroupItem>

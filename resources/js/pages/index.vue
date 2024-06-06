@@ -5,6 +5,12 @@ function handleImageError() {
   document.getElementById("docs-card-content")?.classList.add("!flex-row");
   document.getElementById("background")?.classList.add("!hidden");
 }
+
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+router.push("/auth/login");
 </script>
 
 <template>
